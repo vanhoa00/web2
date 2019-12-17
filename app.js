@@ -22,9 +22,12 @@ app.get('/about', (req, res) => {
 })
 
 app.use('/admin/categories', require('./routes/admin/category.route'));
-app.use(express.static(__dirname+'/public'));
 
-app.use('/admin', express.static(__dirname+'/public'));
+app.use('/admin/products', require('./routes/admin/product.route'));
+
+app.use('/admin/bidders', require('./routes/admin/bidder.route'));
+
+app.use(express.static(__dirname+'/public'));
 
 const PORT = 3000;
 app.listen(PORT, () => {

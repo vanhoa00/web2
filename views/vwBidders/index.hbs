@@ -1,0 +1,49 @@
+<div class="card shadow mb-4">
+  <h4 class="card-header">
+    Bidders
+  </h4>
+
+  {{#if this.empty}}
+  <div class="card-body">
+    <p class="card-text">
+      Không có dữ liệu.
+    </p>
+  </div>
+  {{else}}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col">Hình ảnh</th>
+        <th scope="col">Tên người mua</th>
+        <th scope="col">Rating</th>
+        <th scope="col" class="text-right">
+          <button class="btn btn-outline-success" href="/admin/bidders/add" role="button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add bidder
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each this.products}}
+      <tr>
+        <th scope="row" class="text-center">{{id}}</th>
+        <td ><img src="{{image}}" height="80px" width="80px"></td>
+        <td class="text-left">{{name}}</td>
+        <td >{{rating}}</td>
+        <td class="text-right">
+          <button class="btn btn-sm btn-primary" href="/admin/bidders/detail/{{id}}" role="button">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-sm btn-primary" href="/admin/bidders/edit/{{id}}" role="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{/if}}
+
+</div>

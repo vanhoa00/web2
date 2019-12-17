@@ -1,4 +1,4 @@
-<div class="card shadow">
+<div class="card shadow mb-4">
   <h4 class="card-header">
     Categories
   </h4>
@@ -10,29 +10,32 @@
     </p>
   </div>
   {{else}}
-    <div class="row" style="padding: 10px">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col">Danh mục</th>
+        <th scope="col" class="text-right">
+          <a class="btn btn-outline-success" href="/admin/categories/add" role="button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add Category
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
       {{#each this.categories}}
-        <div class="col-sm-3">
-          <div class="card product">
-            <img class="card-header bg-transparent" src='images/product/{{CatID}}.jpg'
-            onclick="window.location.href = 'views/productDetail.html';">
-            <div class="card-body tdspkhac"
-            onclick="window.location.href = 'views/productDetail.html';">
-              <a href="views/productDetail.html">{{CatName}}</a>
-            </div>
-            <div class="card-footer bg-transparent border-0 add-to-cart">
-              <h6 class="product-price">{{CatPrice}}</h6>
-              {{!-- <button class="add-to-cart-btn"><i class="fas fa-eye"></i> View more</button> --}}
-              <a name="" id="" class="btn btn-sm btn-primary" href="#" role="button">
-                <i class="far fa-edit"></i>
-              </a>
-              <a name="" id="" class="btn btn-sm btn-danger" href="#" role="button">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
+      <tr>
+        <th scope="row" class="text-center">{{id}}</th>
+        <td>{{name}}</td>
+        <td class="text-right">
+          <a class="btn btn-sm btn-primary" href="/admin/categories/edit/{{id}}" role="button">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
       {{/each}}
-    </div>
+    </tbody>
+  </table>
   {{/if}}
 </div>

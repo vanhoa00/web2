@@ -4,42 +4,24 @@ const util = require('util');
 const pool = mysql.createPool({
   connectionLimit: 50,
   host: 'localhost',
-  port: 8889,
+  port: 3306,
   user: 'root',
-  password: 'root',
-  database: 'qlbh'
+  password: '',
+  database: 'auctions'
 });
 
 const mysql_query = util.promisify(pool.query).bind(pool);
 
 module.exports = {
   load: sql => mysql_query(sql),
-
-  // load: sql => new Promise((done, fail) => {
-  //   pool.query(sql, (error, results, fields) => {
-  //     if (error) {
-  //       fail(error);
-  //     } else {
-  //       done(results);
-  //     }
-  //   });
-  // })
-
-  // load: (sql, fn_done) => {
-  //   var connection = mysql.createConnection({
-  //     host: 'localhost',
-  //     port: 8889,
-  //     user: 'root',
-  //     password: 'root',
-  //     database: 'qlbh'
-  //   });
-
-  //   connection.connect();
-  //   connection.query(sql, (error, results, fields) => {
-  //     if (error)
-  //       throw error;
-  //     fn_done(results);
-  //     connection.end();
-  //   });
-  // }
+  add: (tableName, entity) => mysql_query(`insert into ${tableName} set ?`, entity),
+  del: (tableName, condition) => mysql_query(`delete from ${tableName} where ?`, condition),
+  patch: (tableName, entity, condition) => mysql_query(`update ${tableName} set ? where ?`, [entity, condition]),
 };
+// pool.connect(function(err) {
+//   if (err) {
+//     return console.error('error: ' + err.message);
+//   }
+ 
+//   console.log('Connected to the MySQL server.');
+// });

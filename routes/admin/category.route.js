@@ -5,51 +5,47 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-
-  // const pr = db.load('select * from categories1');
-  // pr.then(rows => {
-  //   res.render('vwCategories/index', {
-  //     categories: rows,
-  //     empty: rows.length === 0
-  //   });
-  // }).catch(err => {
-  //   console.log(err);
-  //   res.end('View error log in console.');
-  // });
-  // 
-  const list = [
-    {CatID: 1, CatName: 'Laptop Gaming Asus ROG Strix SCAR GL503GE-EN021T', CatPrice: '22.000.000'},
-    {CatID: 2, CatName: 'Laptop ROG Strix SCAR ', CatPrice: '25.000.000'},
-    {CatID: 3, CatName: 'Laptop ROG Strix SCAR GL503GE-EN021T', CatPrice: '21.000.000'},
-    {CatID: 4, CatName: 'Asus ROG Zephyrus GA502DU-738G512S6G', CatPrice: '29.990.000'},
-    {CatID: 5, CatName: 'Lenovo Legion Y7000-15IRH (81V4000AVN)', CatPrice: '20.890.000'},
-  ]
+  const rows = await categoryModel.all();
   res.render('vwCategories/index', {
-    categories: list
-  })
-  // res.render('home', {
-  //   categories: list
-  // })
+    categories: rows,
+    empty: rows.length === 0
+  });
+})
 
-  // try {
-  //   // const rows = await db.load('select * from categories');
-  //   const rows = await categoryModel.all();
-  //   res.render('vwCategories/index', {
-  //     categories: rows,
-  //     empty: rows.length === 0
-  //   });
-  // } catch (err) {
-  //   console.log(err);
-  //   res.end('View error log in console.');
-  // }
+router.get('/add', (req, res) => {
+  res.render('vwCategories/add');
+})
 
+router.post('/add', async (req, res) => {
+  const result = await categoryModel.add(req.body);
+  // console.log(result.insertId);
+  res.render('vwCategories/add');
+})
 
-  // db.load('select * from categories', rows => {
-  //   res.render('vwCategories/index', {
-  //     categories: rows,
-  //     empty: rows.length === 0
-  //   });
-  // });
+router.get('/err', (req, res) => {
+
+  throw new Error('error occured');
+})
+
+router.get('/edit/:id', async (req, res) => {
+  const rows = await categoryModel.single(req.params.id);
+  if (rows.length === 0) {
+    throw new Error('Invalid category id');
+  }
+  res.render('vwCategories/edit', {
+    category: rows[0]
+  });
+})
+
+router.post('/patch', async (req, res) => {
+  const result = await categoryModel.patch(req.body);
+  res.redirect('/admin/categories');
+})
+
+router.post('/del', async (req, res) => {
+  const result = await categoryModel.del(req.body.CatID);
+  // console.log(result.affectedRows);
+  res.redirect('/admin/categories');
 })
 
 module.exports = router;
