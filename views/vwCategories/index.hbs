@@ -10,34 +10,29 @@
     </p>
   </div>
   {{else}}
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col" class="text-center">#</th>
-        <th scope="col">Category</th>
-        <th scope="col">&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
+    <div class="row" style="padding: 10px">
       {{#each this.categories}}
-      <tr>
-        <th scope="row" class="text-center">{{CatID}}</th>
-        <td>{{CatName}}</td>
-        <td class="text-right">
-          <a name="" id="" class="btn btn-sm btn-primary" href="#" role="button">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-          </a>
-          <a name="" id="" class="btn btn-sm btn-danger" href="#" role="button">
-            <i class="fa fa-trash" aria-hidden="true"></i>
-          </a>
-        </td>
-      </tr>
+        <div class="col-sm-3">
+          <div class="card product">
+            <img class="card-header bg-transparent" src='images/product/{{CatID}}.jpg'
+            onclick="window.location.href = 'views/productDetail.html';">
+            <div class="card-body tdspkhac"
+            onclick="window.location.href = 'views/productDetail.html';">
+              <a href="views/productDetail.html">{{CatName}}</a>
+            </div>
+            <div class="card-footer bg-transparent border-0 add-to-cart">
+              <h6 class="product-price">{{CatPrice}}</h6>
+              {{!-- <button class="add-to-cart-btn"><i class="fas fa-eye"></i> View more</button> --}}
+              <a name="" id="" class="btn btn-sm btn-primary" href="#" role="button">
+                <i class="far fa-edit"></i>
+              </a>
+              <a name="" id="" class="btn btn-sm btn-danger" href="#" role="button">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       {{/each}}
-    </tbody>
-  </table>
+    </div>
   {{/if}}
-
-  <div class="card-footer text-muted">
-    Footer
-  </div>
 </div>

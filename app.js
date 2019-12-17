@@ -24,6 +24,8 @@ app.get('/about', (req, res) => {
 app.use('/admin/categories', require('./routes/admin/category.route'));
 app.use(express.static(__dirname+'/public'));
 
+app.use('/admin', express.static(__dirname+'/public'));
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

@@ -893,3 +893,11 @@ Splash Container / Wrapper
   opacity: 0.9;
   color: #FFF;
 }
+
+.card .product{
+  height: 400px;
+}
+.card .product .card-header{
+  height: 170px;
+  width: 250px;
+}
