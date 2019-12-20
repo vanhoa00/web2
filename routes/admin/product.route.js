@@ -32,8 +32,6 @@ router.get('/edit/:id', async (req, res) => {
   if (rows.length === 0) {
     throw new Error('Invalid product id');
   }
-
-  // var product = db.get()
   res.render('vwProducts/edit', {
     product: rows[0]
   });

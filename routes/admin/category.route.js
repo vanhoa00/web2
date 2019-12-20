@@ -18,7 +18,7 @@ router.get('/add', (req, res) => {
 
 router.post('/add', async (req, res) => {
   const result = await categoryModel.add(req.body);
-  // console.log(result.insertId);
+  //console.log(result.insertId);
   res.render('vwCategories/add');
 })
 
@@ -43,7 +43,7 @@ router.post('/patch', async (req, res) => {
 })
 
 router.post('/del', async (req, res) => {
-  const result = await categoryModel.del(req.body.CatID);
+  const result = await categoryModel.del(req.body.id);
   // console.log(result.affectedRows);
   res.redirect('/admin/categories');
 })

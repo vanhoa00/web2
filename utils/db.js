@@ -7,7 +7,7 @@ const pool = mysql.createPool({
   port: 3306,
   user: 'root',
   password: '',
-  database: 'auctions'
+  database: 'auctions'  
 });
 
 const mysql_query = util.promisify(pool.query).bind(pool);
@@ -22,6 +22,5 @@ module.exports = {
 //   if (err) {
 //     return console.error('error: ' + err.message);
 //   }
- 
 //   console.log('Connected to the MySQL server.');
 // });
