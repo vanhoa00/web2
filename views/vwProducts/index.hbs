@@ -19,12 +19,8 @@
         <th scope="col">Giá</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Danh mục</th>
-        <th scope="col" class="text-right">
-          <a class="btn btn-outline-success" href="/admin/products/add" role="button">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Product
-          </a>
-        </th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Tác vụ</th>
       </tr>
     </thead>
     <tbody>
@@ -37,10 +33,18 @@
         <td >{{unitprice}}</td>
         <td >{{qty}}</td>
         <td >abc</td>
+        <td >
+          {{#ifCond status 1}}
+            <span class="badge badge-pill badge-success">Đang bán</span>
+          {{else}}
+            <span class="badge badge-pill badge-dark">Ẩn</span>
+          {{/ifCond}}
+        </td>
         <td class="text-right">
-          <a class="btn btn-sm btn-primary" href="/admin/products/edit/{{id}}" role="button">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+          <a class="btn btn-sm btn-primary" href="/admin/products/view/{{id}}" type="role">
+            <i class="fa fa-eye" aria-hidden="true"></i>
           </a>
+          
         </td>
       </tr>
       {{/each}}
@@ -49,3 +53,4 @@
   {{/if}}
 
 </div>
+

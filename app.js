@@ -11,10 +11,25 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-app.engine('hbs', exphbs({
+const hbs = exphbs.create({
   defaultLayout: 'main.hbs',
-  layoutsDir: 'views/_layouts'
-}));
+  layoutsDir: 'views/_layouts',
+
+  helpers: {
+    ifCond: function(v1, v2, options) {
+      if(v1 === v2) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    }
+  }
+});
+
+app.engine('hbs', hbs.engine);
+// app.engine('hbs', exphbs({
+//   defaultLayout: 'main.hbs',
+//   layoutsDir: 'views/_layouts'
+// }));
 app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {

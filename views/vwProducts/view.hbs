@@ -1,0 +1,42 @@
+<div class="mt-4 mb-4 text-left">
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="proID">Product ID</label>
+                <input type="text" class="form-control" id="proID" name="proID" readonly
+                    value="{{this.product.id}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ProName">Tên sản phẩm</label>
+                <input type="text" class="form-control" id="ProName" name="ProName" value="{{product.name}}" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="UnitPrice">Giá</label>
+                <input type="number" class="form-control" id="UnitPrice" name="UnitPrice" value="{{product.bidPrice}}" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Qty">Số lượng</label>
+                <input type="number" class="form-control" id="Qty" name="Qty" value="{{product.qty}}" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="CatName">Danh mục</label>
+                <input type="text" class="form-control" id="CatName" name="CatName" value="{{product.qty}}" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ProStt">Trạng thái</label>
+                <input type="text" class="form-control" id="ProStt" name="ProStt" 
+                {{#ifCond product.status 1}} value="Đang bán"  {{else}} value="Đã gỡ" {{/ifCond}} value="1" readonly>
+            </div>
+            {{!-- import ảnh --}}
+        </div>
+        <div style="display: flex;">
+            <button type="submit" class="btn btn-primary mr-2" formaction="/admin/products/update_stt">
+                <i class="fa fa-arrow-down"></i> Gỡ xuống
+            </button>
+            <button type="submit" class="btn btn-primary mr-2" formaction="/admin/products/del">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+            <a class="btn btn-dark" href="/admin/products">Bỏ qua</a>
+        </div>
+    </form>
+</div>
