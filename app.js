@@ -1,6 +1,8 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const morgan = require('morgan');
+const numeral = require('numeral');
+const dateFormat = require('dateformat');
 require('express-async-errors');
 
 const app = express();
@@ -16,6 +18,8 @@ const hbs = exphbs.create({
   layoutsDir: 'views/_layouts',
 
   helpers: {
+    format: val => numeral(val).format('0,0') + ' đ',
+    dateformat: val => dateFormat(val, "dd/mm/yyyy"),
     ifCond: function(v1, v2, options) {
       if(v1 === v2) {
         return options.fn(this);
@@ -32,11 +36,6 @@ app.engine('hbs', hbs.engine);
 // }));
 app.set('view engine', 'hbs');
 
-app.get('/', (req, res) => {
-  // res.end('hello from expressjs');
-  res.render('home');
-})
-
 app.get('/about', (req, res) => {
   res.render('about');
 })
@@ -44,6 +43,8 @@ app.get('/about', (req, res) => {
 app.use('/admin/categories', require('./routes/admin/category.route'));
 
 app.use('/admin/products', require('./routes/admin/product.route'));
+
+app.use('/', require('./routes/user/product.route'));
 
 // app.use('/admin/bidders', require('./routes/admin/bidder.route'));
 

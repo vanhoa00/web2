@@ -1,12 +1,28 @@
-<div class="card shadow">
-  <h4 class="card-header">
-    <i class="fa fa-home" aria-hidden="true"></i>
-    Home
-  </h4>
+  {{#if this.empty}}
   <div class="card-body">
-    Sinh viên tự thực hiện.
+    <p class="card-text">
+      Không có dữ liệu.
+    </p>
   </div>
-  <div class="card-footer text-muted">
-    Footer
+  {{else}}
+  {{#each this.products}}
+  <div class="col-sm-3">
+    <div class="card product" style="height: 400px">
+      <img class="card-header bg-transparent" src="/images/product/{{id_pro}}.jpg"
+      onclick="window.location.href = '/{{id_pro}}';" style="height: 170px">
+      <div class="card-body tdspkhac"
+      onclick="window.location.href = '/{{id_pro}}';">
+      <a href="views/productDetail.html">{{name_pro}}</a>
+    </div>
+    <div class="card-footer bg-transparent border-0 add-to-cart">
+      <h6 class="product-price">{{format bidPrice}}</h6>
+      <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+    </div>
   </div>
 </div>
+
+{{/each}}
+
+{{/if}}
+
+
