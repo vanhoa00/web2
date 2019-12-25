@@ -1,0 +1,93 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/util.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+  $('#txtDOB').datetimepicker({
+    // format: 'd/m/Y H:i'
+    format: 'd/m/Y',
+    timepicker: false,
+    mask: true,
+  });
+</script>
+{{/section}}
+
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-30 p-b-30">
+				<form class="login100-form validate-form" method="POST">
+					<span class="login100-form-title p-b-10">
+						Đăng ký
+					</span>
+					<div class="row mb-3">
+						<h5>Nhanh chóng và dễ dàng</h5>
+					</div>
+					<div class="row">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<input type="text"
+									class="form-control" name="username" id="username" style="width: 420px;" placeholder="UserName">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<input type="text"
+									class="form-control" name="name" id="name" style="width: 420px;" placeholder="Họ tên">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<input type="text"
+									class="form-control" name="Email" id="Email" style="width: 420px;" placeholder="Email">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<input type="text"
+									class="form-control" name="Phone" id="" style="width: 420px;" placeholder="Số di động">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<input type="text" class="form-control" name="dob" id="txtDOB" style="width: 420px;" placeholder="Ngày sinh">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input type="password"
+									class="form-control" name="pass" id="pass" style="width: 420px;" placeholder="Mật khẩu">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input type="password"
+									class="form-control" name="repass" id="repass" style="width: 420px;" placeholder="Xác nhận mật khẩu">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<button id="Success" type="submit" class="btn btn-primary btn-lg btn-block">Đăng ký</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>

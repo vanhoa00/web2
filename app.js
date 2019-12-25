@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const hbs_sections = require('express-handlebars-sections');
 const morgan = require('morgan');
 const numeral = require('numeral');
 const dateFormat = require('dateformat');
@@ -18,6 +19,7 @@ const hbs = exphbs.create({
   layoutsDir: 'views/_layouts',
 
   helpers: {
+    section: hbs_sections(),
     format: val => numeral(val).format('0,0') + ' đ',
     dateformat: val => dateFormat(val, "dd/mm/yyyy"),
     ifCond: function(v1, v2, options) {
@@ -45,6 +47,8 @@ app.use('/admin/categories', require('./routes/admin/category.route'));
 app.use('/admin/products', require('./routes/admin/product.route'));
 
 app.use('/', require('./routes/user/product.route'));
+
+app.use('/user/register', require('./routes/user/Account.route'));
 
 // app.use('/admin/bidders', require('./routes/admin/bidder.route'));
 
