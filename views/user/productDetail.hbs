@@ -136,12 +136,19 @@
             </div>
             <!--Add to cart-->
             <div class="row mt-2 ml-5">
-                <button class="btn btn-success btn-block" onclick="window.location.href = 'Checkout.html';">
-                    Buy Now
-                </button>
-                <button class="btn btn-success btn-block" onclick="window.location.href = 'Checkout.html';">
-                    Start bidding!
-                </button>
+                <form method="POST">
+                    <div class="row mb-2">
+                        <input type="number" name="price" class="col-6 mr-2 ml-3" style="width: 240px" placeholder="Nhập giá . . . ">         
+                        <button class="btn btn-success btn-block col-5" type="submit" style="width: 240px">
+                        Start bidding!
+                        </button>                            
+                    </div>
+                    <button class="btn btn-success btn-block" onclick="window.location.href = 'Checkout.html';" >
+                        Buy Now
+                    </button>
+                </form>
+
+
             </div>
             
             <!--Đang suy nghĩ-->
@@ -199,54 +206,23 @@
         <h3>RELATED PRODUCT</h3>
     </div>
     <div class="row">
+        {{#each this.relate}}
         <div class="col-sm-3">
-            <div class="card product">
-                <img class="card-header bg-transparent" src="">
-                <div class="card-body tdspkhac">
-                    <a href="views/productDetail.html">Laptop Gaming Asus ROG Strix SCAR GL503GE-EN021T </a>
-                </div>
-                <div class="card-footer bg-transparent border-0 add-to-cart">
-                    <h6 class="product-price">27.290.000 ₫</h6>
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                </div>
+            <div class="card product" style="height: 400px">
+              <img class="card-header bg-transparent" src="/images/product/{{id_pro}}.jpg"
+              onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+              <div class="card-body tdspkhac"
+              onclick="window.location.href = '/product/{{id_pro}}';">
+                <a href="views/productDetail.html">{{name_pro}}</a>
+              </div>
+              <div class="card-footer bg-transparent border-0 add-to-cart">
+                <h6 class="product-price">{{format bidPrice}}</h6>
+                <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+              </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="card product">
-                <img class="card-header bg-transparent" src="">
-                <div class="card-body tdspkhac">
-                    <a href="#">Laptop Gaming Asus ROG Strix SCAR GL503GE-EN021T </a>
-                </div>
-                <div class="card-footer bg-transparent border-0 add-to-cart">
-                    <h6 class="product-price">27.290.000 ₫</h6>
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card product">
-                <img class="card-header bg-transparent" src="">
-                <div class="card-body tdspkhac">
-                    <a href="#">Laptop Gaming Asus ROG Strix SCAR GL503GE-EN021T </a>
-                </div>
-                <div class="card-footer bg-transparent border-0 add-to-cart">
-                    <h6 class="product-price">27.290.000 ₫</h6>
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card product">
-                <img class="card-header bg-transparent" src="">
-                <div class="card-body tdspkhac">
-                    <a href="#">Laptop Gaming Asus ROG Strix SCAR GL503GE-EN021T </a>
-                </div>
-                <div class="card-footer bg-transparent border-0 add-to-cart">
-                    <h6 class="product-price">27.290.000 ₫</h6>
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                </div>
-            </div>
-        </div>
+        {{/each}} 
+        
     </div>
     <!--/RELATED PRODUCT-->
 </div>

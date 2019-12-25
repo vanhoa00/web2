@@ -33,7 +33,6 @@ router.post('/del', async (req, res) => {
 
 router.post('/update_stt', async (req, res) => {
   const result = await productModel.update_stt(req.body.proID);
-  console.log(req.body);
   res.redirect('/admin/products');
 })
 module.exports = router;

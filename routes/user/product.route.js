@@ -12,15 +12,37 @@ router.get('/', async (req, res) => {
   });
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/product/:id', async (req, res) => {
   const rows = await productModel.detail(req.params.id);
+  const temp = await productModel.relate();
   if (rows.length === 0) {
     throw new Error('Invalid product id');
   }
   res.render('user/productDetail', {
-    product: rows[0]
+    product: rows[0],
+    relate: temp
   });
 })
+
+router.post('/product/:id', async (req, res) => {
+  const entity = req.body;
+  entity.id_pro = req.params.id;
+  entity.price = req.body.price;
+  entity.id = 1;
+  console.log(entity);
+
+  const rows = await productModel.bidding(entity);
+  const temp = await productModel.detail(req.params.id);
+  const temp1 = await productModel.relate();
+  delete entity.id;
+  const temp2 = await productModel.update_price(entity);
+
+  res.render('user/productDetail', {
+    product: temp[0],
+    relate: temp1
+  });
+})
+
 
 
 module.exports = router;
