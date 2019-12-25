@@ -14,4 +14,5 @@ module.exports = {
   	const id_pro = {id_pro: entity.id_pro};
   	db.update_price('product_detail', current_price, id_pro);
   },
+  search: key => db.load(`select * from products where name_pro like '%${key}%'`),
 };
