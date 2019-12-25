@@ -48,7 +48,7 @@ app.use('/admin/products', require('./routes/admin/product.route'));
 
 app.use('/', require('./routes/user/product.route'));
 
-app.use('/user/register', require('./routes/user/Account.route'));
+app.use('/user', require('./routes/user/Account.route'));
 
 // app.use('/admin/bidders', require('./routes/admin/bidder.route'));
 
