@@ -1,0 +1,269 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/assets/css/user.css">
+{{/section}}
+<div class="container emp-profile">
+	<form method="post">
+		<div class="row">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Trang cá nhân</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#favProduct" role="tab" data-toggle="tab">Sản phẩm yêu thích</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#aucProduct" role="tab" data-toggle="tab">Sản phẩm đang đấu giá</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#selProduct" role="tab" data-toggle="tab">Sản phẩm đã đăng bán</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#rate" role="tab" data-toggle="tab">Xem đánh giá</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade show active" id="profile">
+				<div class="row mt-5">
+					<div class="col-md-4">
+						<div class="profile-img">
+							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+							alt="" />
+							<div class="file btn btn-lg btn-primary">
+								Change Photo
+								<input type="file" name="file" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="profile-head">
+							<h5>
+								{{authUser.name}}
+							</h5>
+							<p class="proile-rating">RANKINGS : <span>8/10</span></p>
+							<ul class="nav nav-tabs" id="myTab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#About"
+									role="tab" aria-controls="home" aria-selected="true">About</a>
+								</li>
+{{!-- 								<li class="nav-item">
+									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#Timeline"
+									role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+								</li> --}}
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="edit_profile">
+							<input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+						</div>
+						<div>
+							<input type="submit" class="profile-edit-btn" name="btnAddMore" value="Change password" />
+						</div>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="tab-content profile-tab" id="myTabContent">
+							<div class="tab-pane fade show active ml-5" id="About" role="tablist">
+								<div class="row">
+									<div class="col-md-6">
+										<label>User Name</label>
+									</div>
+									<div class="col-md-6">
+										<p>{{authUser.username}}</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Name</label>
+									</div>
+									<div class="col-md-6">
+										<p>{{authUser.name}}</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Email</label>
+									</div>
+									<div class="col-md-6">
+										<p>{{authUser.email}}</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Phone</label>
+									</div>
+									<div class="col-md-6">
+										<p>{{authUser.Phone}}</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Permission</label>
+									</div>
+									<div class="col-md-6">
+										<p>{{#if authUser.Permission}}Seller
+											{{else}}Bidder
+                                			{{/if}}
+                                		</p>
+									</div>
+								</div>
+							</div>
+							{{!-- <div class="tab-pane fade" id="Timeline" role="tablist">
+								<div class="row">
+									<div class="col-md-6">
+										<label>Experience</label>
+									</div>
+									<div class="col-md-6">
+										<p>Expert</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Hourly Rate</label>
+									</div>
+									<div class="col-md-6">
+										<p>10$/hr</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Total Projects</label>
+									</div>
+									<div class="col-md-6">
+										<p>230</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>English Level</label>
+									</div>
+									<div class="col-md-6">
+										<p>Expert</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Availability</label>
+									</div>
+									<div class="col-md-6">
+										<p>6 months</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<label>Your Bio</label><br />
+										<p>Your detail description</p>
+									</div>
+								</div>
+							</div> --}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="favProduct">
+				<table class="table table-hover mt-2">
+					<thead>
+						<tr>
+							<th>Tên sản phẩm</th>
+							<th>Người đăng bán</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Nokia 5</td>
+							<td>Doe</td>
+							<td>john@example.com</td>
+						</tr>
+						<tr>
+							<td>Dell vostro 5568</td>
+							<td>Moe</td>
+							<td>mary@example.com</td>
+						</tr>
+						<tr>
+							<td>Xiaomi Redmi note 5</td>
+							<td>Dooley</td>
+							<td>july@example.com</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="aucProduct">
+				<table class="table table-hover mt-2">
+					<thead>
+						<tr>
+							<th>Tên sản phẩm</th>
+							<th>Người đăng bán</th>
+							<th>Thời gian còn lại</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Samsung note 9</td>
+							<td>Kshiti</td>
+							<td>10 days</td>
+						</tr>
+						<tr>
+							<td>MSI GL65</td>
+							<td>Kshiti</td>
+							<td>15 days</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="selProduct">
+				<table class="table table-hover mt-2">
+					<thead>
+						<tr>
+							<th>Tên sản phẩm</th>
+							<th>Người đăng bán</th>
+							<th>Tình Trạng</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Samsung note 9</td>
+							<td>Kshiti</td>
+							<td>Đang bán</td>
+						</tr>
+						<tr>
+							<td>MSI GL65</td>
+							<td>Kshiti</td>
+							<td>Đang bán</td>
+						</tr>
+						<tr>
+							<td>Acer Nito 5</td>
+							<td>Kshiti</td>
+							<td>Đã bán</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="rate">
+				<table class="table table-hover mt-2">
+					<thead>
+						<tr>
+							<th>Tên sản phẩm</th>
+							<th>UserName</th>
+							<th>Rate</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Acer Nito 5</td>
+							<td>Doe</td>
+							<td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
+
+	</form>
+</div>

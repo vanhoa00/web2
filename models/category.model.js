@@ -10,5 +10,6 @@ module.exports = {
     delete entity.id;
     console.log(condition, entity);
     return db.patch('categories', entity, condition);
-  }
+  },
+
 };

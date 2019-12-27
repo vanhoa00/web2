@@ -1,0 +1,107 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.7/css/fileinput.min.css">
+{{/section}}
+
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+$('#fuMain').fileinput({
+    theme: 'fa',
+    dropZoneEnabled: false,
+    allowedFileExtensions: ['png', 'jpg', 'gif'],
+});
+</script>
+
+<script type="text/javascript">
+$('#customFileLang').on('change',function(){
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+    });
+</script>
+{{/section}}
+<form method="post" enctype="multipart/form-data">
+    <div class="container mb-5">
+        <div class="row mt-2 mb-3">
+            <h2>Thông tin đăng ký sản phẩm đấu giá</h2>
+        </div>
+
+        <!--Product detail-->
+        <div class="row ml-5">
+            <dl class="dl-horizontal">
+                <!--Current Price: giá hiện tại-->
+                <dt>
+                    <h5>Tên sản phẩm</h5>
+                </dt>
+                <dd>
+                    <input type="text" class="form-control form-control-xs" name="tenSP" id="" style="width: 420px;"
+                    placeholder="Nhập tên sản phẩm">
+                </dd>
+                <!--Price: giá mua ngay-->
+                <dt>
+                    <h5>Ảnh (chọn 3 ảnh)</h5>
+                </dt>
+                <dd style="width: 420px">
+                    <div class="file-loading">
+                        <input id="fuMain" name="fuMain" type="file" class="file" multiple data-show-upload="false" data-show-caption="true" accept="image/*" data-msg-placeholder="Select {files} for upload...">
+                    </div>
+                </dd>
+                <!--Description: Thông tin người bán và điểm đánh giá-->
+                <dt>
+                    <h5>Giá khởi điểm</h5>
+                </dt>
+                <dd>
+                    <input type="text" class="form-control form-control-xs" name="giaSP" id="" style="width: 420px;"
+                    placeholder="Nhập giá sản phẩm">
+                </dd>
+                <dt>
+                    <h5>Bước giá</h5>
+                </dt>
+                <dd>
+                    <input type="text" class="form-control form-control-xs" name="buocGia" id="" style="width: 420px;"
+                    placeholder="Nhập bước giá">
+                </dd>
+                <dt>
+                    <h5>Giá mua ngay</h5>
+                </dt>
+                <dd>
+                    <input type="text" class="form-control form-control-xs" name="giaMuaNgay" id=""
+                    style="width: 420px;" placeholder="Nhập giá mua ngay">
+                </dd>
+                <dt>
+                    <h5>Mô tả sản phẩm</h5>
+                </dt>
+                <dd>
+                    <input type="text" class="form-control form-control-xs" name="giaMuaNgay" id=""
+                    style="width: 420px;" placeholder="Nhập mô tả">
+                </dd>
+                <dt>
+                    <h5>Tự động gia hạn</h5>
+                </dt>
+                <dd>
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-1">
+                        <label for="payment-1">
+                            <span></span>
+                            Có
+                        </label>
+                    </div>
+                    <div class="input-radio">
+                        <input type="radio" name="payment" id="payment-2">
+                        <label for="payment-2">
+                            <span></span>
+                            Không
+                        </label>
+                    </div>
+                </dd>
+            </dl>
+            <button class="btn btn-success btn-block" type="submit">
+                Đăng bán
+            </button>
+        </div>
+        <!--Add to cart-->
+    </div>
+</form>

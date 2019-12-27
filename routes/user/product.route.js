@@ -37,13 +37,14 @@ router.post('/product/:id', async (req, res) => {
   const entity = req.body;
   entity.id_pro = req.params.id;
   entity.price = req.body.price;
-  entity.id = 1;
-  console.log(entity);
+  entity.id = req.session.authUser.id;
 
   const rows = await productModel.bidding(entity);
   const temp = await productModel.detail(req.params.id);
   const temp1 = await productModel.relate();
   delete entity.id;
+  console.log(entity);
+
   const temp2 = await productModel.update_price(entity);
 
   res.render('user/productDetail', {

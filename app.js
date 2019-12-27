@@ -4,6 +4,7 @@ const hbs_sections = require('express-handlebars-sections');
 const morgan = require('morgan');
 const numeral = require('numeral');
 const dateFormat = require('dateformat');
+const session = require('express-session');
 require('express-async-errors');
 
 const app = express();
@@ -31,6 +32,15 @@ const hbs = exphbs.create({
   }
 });
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  // cookie: {
+  //     secure: true
+  // }
+}))
+
 app.engine('hbs', hbs.engine);
 // app.engine('hbs', exphbs({
 //   defaultLayout: 'main.hbs',
@@ -40,17 +50,10 @@ app.set('view engine', 'hbs');
 
 app.get('/about', (req, res) => {
   res.render('about');
-})
+});
 
-app.use('/admin/categories', require('./routes/admin/category.route'));
-
-app.use('/admin/products', require('./routes/admin/product.route'));
-
-app.use('/', require('./routes/user/product.route'));
-
-app.use('/user', require('./routes/user/Account.route'));
-
-// app.use('/admin/bidders', require('./routes/admin/bidder.route'));
+require('./middlewares/locals.mdw')(app);
+require('./middlewares/routes.mdw')(app);
 
 app.use(express.static(__dirname+'/public'));
 

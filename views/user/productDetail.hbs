@@ -137,13 +137,13 @@
             <!--Add to cart-->
             <div class="row mt-2 ml-5">
                 <form method="POST">
-                    <div class="row mb-2">
+                    <div class="row mb-2">  
                         <input type="number" name="price" class="col-6 mr-2 ml-3" style="width: 240px" placeholder="Nhập giá . . . ">         
-                        <button class="btn btn-success btn-block col-5" type="submit" style="width: 240px">
+                        <button class="btn btn-success btn-block col-5" {{#if isAuthenticated}} type="submit" {{else}} formaction="/user/login" {{/if}}style="width: 240px">
                         Start bidding!
                         </button>                            
                     </div>
-                    <button class="btn btn-success btn-block" onclick="window.location.href = 'Checkout.html';" >
+                    <button class="btn btn-success btn-block" onclick="window.location.href = '/user/login';" >
                         Buy Now
                     </button>
                 </form>
