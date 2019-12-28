@@ -11,4 +11,6 @@ module.exports = {
   },
   add: entity => db.add('users', entity),
   del: id => db.del('users', { f_ID: id }),
+
+  upgrade_list: () => db.load('select * from users where Permission = 2'),
 };

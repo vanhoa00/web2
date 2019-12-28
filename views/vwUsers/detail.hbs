@@ -1,0 +1,88 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/assets/css/user.css">
+{{/section}}
+<div class="col-12 card shadow mb-4 mt-3">
+    <div class="tab-content">
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="{{user.avatar}}">
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="profile-head">
+                    <h2>
+                        {{user.name}}
+                    </h2>
+                    <p class="proile-rating">RATING: <span>{{user.rating}}/5</span></p>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#About" role="tab"
+                                aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active ml-5" id="About" role="tablist">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>User Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.username}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.name}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>DOB</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{dateformat user.DateOfBirth}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.email}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Phone</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.Phone}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Permission</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{#ifCond user.Permission 0}}Bidder{{else}}Seller{{/ifCond}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

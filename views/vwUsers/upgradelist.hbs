@@ -1,0 +1,48 @@
+<div class="col-12 card shadow mb-4">
+    <h2 class="text-left">Danh sách bidder xin nâng cấp</h2>
+
+
+    {{#if this.empty}}
+    <div class="card-body">
+        <p class="card-text">
+            Không có dữ liệu.
+        </p>
+    </div>
+    {{else}}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Username</th>
+                <th scope="col">Loại tài khoản</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Tác vụ</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.users}}
+            <tr>
+                <th scope="row" class="text-center">{{id}}</th>
+                <td><img src="{{avatar}}" height="80px" width="80px"></td>
+                <td class="text-left">{{name}}</td>
+                <td class="text-left">{{username}}</td>
+                <td>{{#ifCond Permission 1}}Seller{{else}}Bidder{{/ifCond}}</td>
+                <td>{{rating}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" href="#" role="button">
+                        <i class="fa fa-check" aria-hidden="true"> Duyệt </i>
+                    </button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
+    <div class="text-left mb-3">
+        <a class="btn btn-dark" href="/admin/users">Bỏ qua</a>
+    </div>
+    
+</div>

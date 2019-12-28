@@ -6,6 +6,11 @@ module.exports = function (app) {
 
 	app.use('/admin/products', require('../routes/admin/product.route'));
 
+	app.use('/admin/users', require('../routes/admin/user.route'));
+
+	// chưa biết dasboard của admin là gì, lấy tạm sản phẩm
+	app.use('/admin', require('../routes/admin/product.route'));
+
 	app.use('/', require('../routes/user/product.route'));
 
 	app.use('/user', require('../routes/user/Account.route'));

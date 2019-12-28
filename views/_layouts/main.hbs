@@ -2,235 +2,33 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Trang chủ</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/media-queries.css">
-    
-    <link rel="stylesheet" href="/assets/css/auction.css">
-    {{{_sections.css}}}
+    {{>head}}
 </head>
 
 <body>
-    <!-- TOP HEADER -->
-    <div id="top-header" class="top-header">
-        <div class="container">
-            <div class="pull-left">
-                <ul class="header-links">
-                    <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                    <li><a href="#"><i class="fa fa-envelope"></i>email@email.com</a></li>
-                    <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
-                </ul>
-            </div>
-            <form id="frmLogout" method="post" action="/user/logout"></form>
-
-            <div class="pull-right">
-                <ul class="header-links">
-                    <li>
-                        {{#if isAuthenticated}}
-                        <div class="dropdown show">
-                            <a class="dropdown-toggle" href="login/login.html" id="dropdownMenuLink"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                                {{authUser.name}}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
-                                style="background-color: #1E1F29;">
-                                <a class="dropdown-item" href="/user/profile">Profile</a>
-                                {{#if authUser.Permission}}
-                                    <a class="dropdown-item" href="/user/sellproduct">Auction</a>
-                                {{/if}}
-                                <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">Log out</a>
-                            </div>
-                        </div>
-                        {{else}}
-                        <div class="dropdown show">
-                            <a class="dropdown-toggle" href="" id="dropdownMenuLink"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                                My account
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
-                                style="background-color: #1E1F29;">
-                                <a class="dropdown-item" href="/user/login">Login</a>
-                                <a class="dropdown-item" href="/user/register">Register</a>
-                            </div>
-                        </div>
-                        {{/if}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- /TOP HEADER -->
-    <!-- MAIN HEADER -->
-    <div id="myHeader" class="main-header">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3">
-                    <div class="header-logo">
-                        <a href="/" class="logo">
-                            <img src="/assets/img/logo.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <!-- /LOGO -->
-
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                    <div class="header-search">
-                        <form method="POST">
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="2">Category 02</option>
-                            </select>
-                            <input class="input" placeholder="Search here" name="key" id="key">
-                            <button class="search-btn" type="submit">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /SEARCH BAR -->
-
-                <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
-                    <div class="header-ctn">
-
-                    </div>
-                </div>
-                <!-- /ACCOUNT -->
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-    </div>
-    <!-- /MAIN HEADER -->
+    {{>header}}
 
     <!-- CONTENT -->
     <div class="container-fluid">
         <div class="row">
-			<div class="col-sm-2 menu">
-				<!-- LEFT MENU-->
-				<div id="leftmenu" class="leftmenu">
-					<ul class="navbar-nav flex-column">
-						<li class="category">
-							<i class="fa fa-list" aria-hidden="true"></i>
-                            Category
-						</li>
-						<li class="nav-item ">
-							<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
-								data-target="#submenu-1" aria-controls="submenu-1"></i>Điện tử</a>
-							<div id="submenu-1" class="collapse submenu">
-								<ul class="nav flex-column">
-									<li class="nav-item">
-										<a class="nav-link" href="/admin/categories">&nbsp<i class="fa fa-mobile" aria-hidden="true"></i> &nbspĐiện thoại</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href=""> <i class="fa fa-laptop" aria-hidden="true"></i> Laptop</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<!-- /LEFT MENU-->
-			</div>
+            <div class="col-sm-2 menu">
+                {{>leftmenu}}
+            </div>
             <div class="col-sm-10">
                 <div class="row">
-                {{{body}}}
-                    
+                    {{{body}}}
                 </div>
             </div>
-			
-		</div>
+        </div>
     </div>
     <!-- /CONTENT -->
 
-    <!-- FOOTER -->
-    <div id="footer">
-        <!-- top footer -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">About Us</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                                ut.</p>
-                            <ul class="footer-links">
-                                <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-                                <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i>email@email.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
+    {{>footer}}
 
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Categories</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">Hot deals</a></li>
-                                <li><a href="#">Laptops</a></li>
-                                <li><a href="#">Smartphones</a></li>
-                                <li><a href="#">Cameras</a></li>
-                                <li><a href="#">Accessories</a></li>
-                            </ul>
-                        </div>
-                    </div>
+    {{>foot}}
 
-                    <div class="clearfix visible-xs"></div>
+    {{{_sections.js}}}
 
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Information</h3>
-                            <ul class="footer-links">
-                                <li><a href="../about">About Us</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Orders and Returns</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="footer">
-                            <h3 class="footer-title">Service</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">View Cart</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Track My Order</a></li>
-                                <li><a href="#">Help</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /top footer -->
-    </div>
-    <!-- /FOOTER -->
-    
-    <script src="/assets/js/javascript.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  {{{_sections.js}}}
-    
 </body>
 
 </html>

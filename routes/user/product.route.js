@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   const rows = await productModel.all();
   res.render('home', {
     products: rows,
-    empty: rows.length === 0
+    empty: rows.length === 0,
   });
 })
 
