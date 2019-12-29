@@ -19,4 +19,7 @@ module.exports = {
   update_stt: (tableName, condition) => mysql_query(`update ${tableName} set status = 2 where ?`, condition),
   update_price: (tableName, current_price, id_pro) => mysql_query(`update ${tableName} set ? where ?`, [current_price, id_pro]),
   patch: (tableName, entity, condition) => mysql_query(`update ${tableName} set ? where ?`, [entity, condition]),
+
+  upgrade: (tableName, condition) => mysql_query(`update ${tableName} set Permission = 1 where ?`, condition),
+  downgrade: (tableName, condition) => mysql_query(`update ${tableName} set Permission = 0 where ?`, condition),
 };

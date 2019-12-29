@@ -10,7 +10,16 @@ module.exports = {
     return rows[0];
   },
   add: entity => db.add('users', entity),
-  del: id => db.del('users', { f_ID: id }),
+  del: user_id => db.del('users', { id: user_id }),
+
+  patch: entity => {
+    const condition = { id: entity.id };
+    //delete entity.id;
+    //console.log(condition, entity);
+    return db.patch('users', entity, condition);
+  },
 
   upgrade_list: () => db.load('select * from users where Permission = 2'),
+  upgrade: user_id => db.upgrade('users', { id: user_id }),
+  downgrade: user_id => db.downgrade('users', { id: user_id }),
 };

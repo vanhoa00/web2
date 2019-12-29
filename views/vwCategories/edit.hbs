@@ -3,16 +3,26 @@
   <div class="form-row">
     <div class="form-group">
         <label for="txtCatId">Cat ID</label>
-        <input type="text" class="form-control" id="CatID" name="id" readonly value="{{this.category.id}}">
+        <input type="text" class="form-control" id="CatID" name="id" readonly value="{{category.id}}">
       </div>
     <div class="form-group col-md-6">
       <label for="CatName">Tên danh mục</label>
       <input type="text" class="form-control" id="CatName" name="name" value="{{category.name}}">
     </div>
+    {{!-- Nếu là danh mục cha, sẽ không có chọn danh mục cha --}}
+    {{#ifCond category.id_parent 0}}
+    {{else}}
     <div class="form-group col-md-6">
-      <label for="CatParentName">Danh mục cha</label>
-      <input type="text" class="form-control" id="CatParentName" name="id_parent" value="{{category.id_parent}}">
+      <label for="CatIdParent">Danh mục cha</label>
+      <select type="text" class="form-control" id="CatIdParent" name="id_parent" placeholder="Danh mục">
+          {{#each cat_parent}}
+              <option {{#ifCond id ../category.id_parent}} selected {{/ifCond}} value="{{id}}">
+                {{name}}
+              </option>
+          {{/each}}
+      </select>
     </div>
+    {{/ifCond}}
   </div>
   <div class="form-group">
         <div class="form-check">
@@ -26,6 +36,7 @@
         </div>
     </div>
     <button class="btn btn-primary" type="submit" formaction="/admin/categories/patch">Ghi</button>
+    <button class="btn btn-danger" type="submit" formaction="/admin/categories/del" title="Xóa">Xóa</button>
     <a class="btn btn-dark" href="/admin/categories">Bỏ qua</a>
 </form>
 </div>

@@ -4,7 +4,7 @@ module.exports = {
   all: () => db.load('select * from categories'),
   single: id => db.load(`select * from categories where id = ${id}`),
   add: entity => db.add('categories', entity),
-  del: condition => db.del('categories', condition),
+  del: cat_id => db.del('categories', { id: cat_id }),
   patch: entity => {
     const condition = { id: entity.id };
     delete entity.id;
@@ -12,4 +12,5 @@ module.exports = {
     return db.patch('categories', entity, condition);
   },
 
+  cat_lv1: () => db.load('select * from categories where id_parent = 0'),
 };

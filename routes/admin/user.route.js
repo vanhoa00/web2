@@ -27,8 +27,9 @@ router.get('/upgradelist', async (req, res) => {
 
 router.get('/detail/:id', async (req, res) => {
   const rows = await userModel.single(req.params.id);
+  console.log(rows);
   if (rows.length === 0) {
-    throw new Error('Invalid bidder id');
+    throw new Error('Invalid user id');
   }
   res.render('vwUsers/detail', {
     user: rows[0]
@@ -38,7 +39,7 @@ router.get('/detail/:id', async (req, res) => {
 router.get('/edit/:id', async (req, res) => {
   const rows = await userModel.single(req.params.id);
   if (rows.length === 0) {
-    throw new Error('Invalid bidder id');
+    throw new Error('Invalid user id');
   }
   res.render('vwUsers/edit', {
     user: rows[0]
@@ -46,14 +47,26 @@ router.get('/edit/:id', async (req, res) => {
 })
 
 router.post('/patch', async (req, res) => {
-  const result = await bidderModel.patch(req.body);
-  res.redirect('/admin/bidders');
+  const result = await userModel.patch(req.body);
+  res.redirect('/admin/users');
+})
+
+router.post('/upgrade', async (req, res) => {
+  const result = await userModel.upgrade(req.body.id);
+  res.redirect('/admin/users');
+})
+
+router.post('/downgrade', async (req, res) => {
+  console.log(req.body);
+  const result = await userModel.downgrade(req.body.id);
+  
+  res.redirect('/admin/users');
 })
 
 router.post('/del', async (req, res) => {
-  const result = await bidderModel.del(req.body.CatID);
-  // console.log(result.affectedRows);
-  res.redirect('/admin/bidders');
+  const result = await userModel.del(req.body.id);
+  //console.log(req.body.id);
+  res.redirect('/admin/users');
 })
 
 module.exports = router;

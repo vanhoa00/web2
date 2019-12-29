@@ -12,8 +12,14 @@ router.get('/', async (req, res) => {
   });
 })
 
-router.get('/add', (req, res) => {
-  res.render('vwCategories/add');
+router.get('/add', async (req, res) => {
+  const cat_lv1 = await categoryModel.cat_lv1();
+  if (cat_lv1.length === 0) {
+    throw new Error('Invalid category id lv1');
+  }
+  res.render('vwCategories/add',{
+    cat_parent: cat_lv1,
+  });
 })
 
 router.post('/add', async (req, res) => {
@@ -29,11 +35,16 @@ router.get('/err', (req, res) => {
 
 router.get('/edit/:id', async (req, res) => {
   const rows = await categoryModel.single(req.params.id);
+  const cat_lv1 = await categoryModel.cat_lv1();
   if (rows.length === 0) {
     throw new Error('Invalid category id');
   }
+  if (cat_lv1.length === 0) {
+    throw new Error('Invalid category id lv1');
+  }
   res.render('vwCategories/edit', {
-    category: rows[0]
+    category: rows[0],
+    cat_parent: cat_lv1,
   });
 })
 
@@ -44,7 +55,7 @@ router.post('/patch', async (req, res) => {
 
 router.post('/del', async (req, res) => {
   const result = await categoryModel.del(req.body.id);
-  // console.log(result.affectedRows);
+  //console.log(req.body.id);
   res.redirect('/admin/categories');
 })
 

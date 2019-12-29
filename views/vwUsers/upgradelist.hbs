@@ -32,8 +32,9 @@
                 <td>{{#ifCond Permission 1}}Seller{{else}}Bidder{{/ifCond}}</td>
                 <td>{{rating}}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary" href="#" role="button">
-                        <i class="fa fa-check" aria-hidden="true"> Duyệt </i>
+                    <button class="btn btn-sm btn-primary" onclick="window.location.href='/admin/users/detail/{{id}}'"
+                        title="Chi tiết">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
                     </button>
                 </td>
             </tr>
@@ -44,5 +45,4 @@
     <div class="text-left mb-3">
         <a class="btn btn-dark" href="/admin/users">Bỏ qua</a>
     </div>
-    
 </div>
