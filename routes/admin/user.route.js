@@ -1,6 +1,6 @@
 const express = require('express');
 const userModel = require('../../models/user.model');
-
+const moment = require('moment');
 const router = express.Router();
 
 
@@ -47,6 +47,9 @@ router.get('/edit/:id', async (req, res) => {
 })
 
 router.post('/patch', async (req, res) => {
+  req.body.DateOfBirth = moment(req.body.DateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  if(req.body.Permission === 'Bidder') req.body.Permission = 0;
+  else req.body.Permission = 1;
   const result = await userModel.patch(req.body);
   res.redirect('/admin/users');
 })

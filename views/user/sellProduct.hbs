@@ -22,13 +22,36 @@ $('#customFileLang').on('change',function(){
         $(this).next('.custom-file-label').html(fileName);
     });
 </script>
+
+<script
+  src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
+<script>
+  tinymce.init({
+    selector: '#description',
+    height: 600,
+    plugins: 'paste image link autolink lists table media',
+    menubar: false,
+    toolbar: [
+      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+      'forecolor backcolor',
+      'table link image media',
+    ],
+  });
+</script>
 {{/section}}
 <form method="post" enctype="multipart/form-data">
     <div class="container mb-5">
         <div class="row mt-2 mb-3">
             <h2>Thông tin đăng ký sản phẩm đấu giá</h2>
         </div>
-
+        {{#if err_message}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{err_message}}
+        </div>
+        {{/if}}
         <!--Product detail-->
         <div class="row ml-5">
             <dl class="dl-horizontal">
@@ -37,14 +60,14 @@ $('#customFileLang').on('change',function(){
                     <h5>Tên sản phẩm</h5>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control form-control-xs" name="tenSP" id="" style="width: 420px;"
+                    <input type="text" class="form-control form-control-xs" name="name_pro" id="name_pro" style="width: 700px;"
                     placeholder="Nhập tên sản phẩm">
                 </dd>
                 <!--Price: giá mua ngay-->
                 <dt>
                     <h5>Ảnh (chọn 3 ảnh)</h5>
                 </dt>
-                <dd style="width: 420px">
+                <dd style="width: 700px">
                     <div class="file-loading">
                         <input id="fuMain" name="fuMain" type="file" class="file" multiple data-show-upload="false" data-show-caption="true" accept="image/*" data-msg-placeholder="Select {files} for upload...">
                     </div>
@@ -54,29 +77,28 @@ $('#customFileLang').on('change',function(){
                     <h5>Giá khởi điểm</h5>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control form-control-xs" name="giaSP" id="" style="width: 420px;"
+                    <input type="number" class="form-control form-control-xs" name="current_price" id="current_price" style="width: 700px;"
                     placeholder="Nhập giá sản phẩm">
                 </dd>
                 <dt>
                     <h5>Bước giá</h5>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control form-control-xs" name="buocGia" id="" style="width: 420px;"
+                    <input type="number" class="form-control form-control-xs" name="buocGia" id="buocGia" style="width: 700px;"
                     placeholder="Nhập bước giá">
                 </dd>
                 <dt>
                     <h5>Giá mua ngay</h5>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control form-control-xs" name="giaMuaNgay" id=""
-                    style="width: 420px;" placeholder="Nhập giá mua ngay">
+                    <input type="number" class="form-control form-control-xs" name="buynow_price" id="buynow_price"
+                    style="width: 700px;" placeholder="Nhập giá mua ngay">
                 </dd>
                 <dt>
                     <h5>Mô tả sản phẩm</h5>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control form-control-xs" name="giaMuaNgay" id=""
-                    style="width: 420px;" placeholder="Nhập mô tả">
+                    <textarea class="form-control" id="description" name="description" style="width: 700px;" placeholder="Nhập mô tả"></textarea>
                 </dd>
                 <dt>
                     <h5>Tự động gia hạn</h5>

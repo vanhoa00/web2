@@ -1,7 +1,13 @@
 
 <div class="card shadow mr-3">
 	<h4 class="card-header">
+		{{#ifCond authUser.Permission 3}}
 		Chức năng
+
+		{{else}}
+		Categories
+
+		{{/ifCond}}
 	</h4>
 	<div class="list-group list-group-flush">
 		{{!-- {{#each listfunc}}

@@ -2,20 +2,24 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const multer  = require('multer')
+const validator = require("email-validator");
+var modifyFilename = require('modify-filename');
 const userModel = require('../../models/user.model');
+const productModel = require('../../models/product.model');
 
 const router = express.Router();
-
+var temp = 1;
+var ID = 0;
 const storage = multer.diskStorage({
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-    console.log(file);
-  },
   destination: function (req, file, cb) {
-    cb(null, `./public/images/product`);
+    cb(null, `./public/images/product`)
   },
-});
-const upload = multer({ storage });
+  filename: function (req, file, cb) {
+    cb(null, ID + '_' + temp + '.jpg')
+    temp++;
+  }
+})
+var upload = multer({ storage: storage })
 
 
 router.get('/register', async (req, res) => {
@@ -23,6 +27,33 @@ router.get('/register', async (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
+  if(req.body.username == ""){
+    return res.render('user/Register', {
+      err_message: 'Invalid Username'
+    });
+  };
+  if(req.body.name == "" || req.body.Phone == ""){
+    return res.render('user/Register', {
+      err_message: 'Invalid Name or Phone'
+    });
+  };
+  if(validator.validate(req.body.Email) === false){
+    return res.render('user/Register', {
+      err_message: 'Invalid Email'
+    });
+  };
+  // if(req.body.Phone.length() != 10 || req.body.Phone.length() != 11){
+  //   return res.render('user/Register', {
+  //     err_message: 'Invalid Phone'
+  //   });
+  // };
+
+  if(req.body.raw_password != req.body.repass){
+    return res.render('user/Register', {
+      err_message: 'Invalid Password'
+    });
+  };
+
   const N = 10;
   const hash = bcrypt.hashSync(req.body.raw_password, N);
   const DateOfBirth = moment(req.body.DateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -43,17 +74,56 @@ router.get('/profile', async (req, res) => {
 })
 
 
-
 router.get('/sellproduct', async (req, res) => {
   res.render('user/sellProduct');
 })
 
 router.post('/sellproduct', async (req, res) => {
-  upload.single('fuMain')(req, res, err => {
-    if (err) { }
+  const getID = await productModel.getID();
+  var files;
+  temp = 1;
+
+  ID = getID[0].id + 1;
+  upload.array('fuMain', 3)(req, res, err => {
+    files = req.files;
+    if(files.length != 3)
+    {
+      return res.render('user/sellProduct', {
+        err_message: 'Invalid files'
+      });
+    }
+    else {
+      console.log(req.body);
+      // const name_pro = req.body.name_pro;
+      // const current_price = req.body.bidPrice;
+      // const buynow_price = req.body.buynow_price;
+      // const description = req.body.description;
+      // const time_start = '2019-12-25 00:00:00';
+      // const time_end = '2020-01-25 00:00:00';
+
+      // const insert = req.body;
+      // delete insert.bidPrice;
+      // delete insert.buocGia;
+      // insert.current_price = current_price;
+      // insert.id_sel = res.locals.authUser.id;
+      // insert.time_start = time_start;
+      // insert.time_end = time_end;
+      // console.log(insert);
+
+      //const result = productModel.add(insert);
+
+      const insert = req.body;
+      delete insert.buocGia;
+      insert.id_sel = res.locals.authUser.id;
+      insert.time_start = '2019-12-25 00:00:00';
+      insert.time_end = '2020-01-25 00:00:00';
+      insert.status_pro = 1;
+
+      const result = productModel.add(insert);
+
       res.render('user/sellProduct');
+    }
   });
-  
 })
 
 router.get('/login', async (req, res) => {
@@ -90,7 +160,6 @@ router.post('/logout', (req, res) => {
   req.session.authUser = null;
   res.redirect(req.headers.referer);
 });
-
 
 
 module.exports = router;

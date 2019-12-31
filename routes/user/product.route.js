@@ -20,6 +20,14 @@ router.post('/', async (req, res) => {
   });
 })
 
+router.post('/', async (req, res) => {
+  const rows = await productModel.search(req.body.key);
+  res.render('home', {
+    products: rows,
+    empty: rows.length === 0
+  });
+})
+
 
 router.get('/product/:id', async (req, res) => {
   const rows = await productModel.detail(req.params.id);

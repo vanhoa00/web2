@@ -9,11 +9,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
 </script>
 <script type="text/javascript">
-  $(function () {
-    $('#DateOfBirth').datetimepicker({
-      pickTime: false
-    });
-  });
+  // $(function () {
+  //   $('#DateOfBirth').datetimepicker({
+  //     pickTime: false
+  //   });
+  // });
+  $('#DateOfBirth').datetimepicker({
+    // format: 'd/m/Y H:i'
+    format: 'd/m/Y',
+    timepicker: false,
+    mask: true,
+});
 </script>
 {{/section}}
 

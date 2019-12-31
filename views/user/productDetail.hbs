@@ -12,11 +12,11 @@
             <!--Narbar product images-->
             <div class="row" width=100;>
                 <div id="showImg">
-                    <img class="showImg" src="/images/Product/{{product.id_pro}}.jpg" alt="First slide" id="img1">
+                    <img class="showImg" src="/images/Product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">
                     <script>
                         var i = 0;
                         var images = [];
-                        images[0] = '<img class="showImg" src="/images/product/{{product.id_pro}}.jpg" alt="First slide" id="img1">';
+                        images[0] = '<img class="showImg" src="/images/product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">';
                         images[1] = '<img class="showImg" src="/images/product/{{product.id_pro}}_2.jpg" alt="Second slide" id="img2">';
                         images[2] = '<img class="showImg" src="/images/product/{{product.id_pro}}_3.jpg" alt="Third slide" id="img3">';
                         function showImg() {
@@ -30,7 +30,7 @@
             <!--list detail images of product-->
             <div class="row mt-1">
                 <div class="listImg">
-                    <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}.jpg" id="0"></div>
+                    <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_1.jpg" id="0"></div>
                     <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_2.jpg" id="1"></div>
                     <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_3.jpg" id="2"></div>
                     <script>
@@ -163,10 +163,7 @@
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="des-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true" style="border-bottom: 0;">Description</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="detail-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false" style="border-bottom: 0;">Details</a>
+                            <a class="nav-link active" id="des-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true" style="border-bottom: 0;">Details</a>
                         </li>
                     </ul>
                     <!-- /product tab nav -->
@@ -177,7 +174,7 @@
                         <div class="tab-pane fade show active" id="tab1" role="tablist">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p>Mô tả chi tiết sản phẩm</p>
+                                    {{{product.description}}}
                                 </div>
                             </div>
                         </div>
@@ -209,14 +206,14 @@
         {{#each this.relate}}
         <div class="col-sm-3">
             <div class="card product" style="height: 400px">
-              <img class="card-header bg-transparent" src="/images/product/{{id_pro}}.jpg"
+              <img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
               onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
               <div class="card-body tdspkhac"
               onclick="window.location.href = '/product/{{id_pro}}';">
                 <a href="views/productDetail.html">{{name_pro}}</a>
               </div>
               <div class="card-footer bg-transparent border-0 add-to-cart">
-                <h6 class="product-price">{{format bidPrice}}</h6>
+                <h6 class="product-price">{{format current_price}}</h6>
                 <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
               </div>
             </div>
