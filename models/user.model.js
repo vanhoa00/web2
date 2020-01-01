@@ -14,8 +14,6 @@ module.exports = {
 
   patch: entity => {
     const condition = { id: entity.id };
-    //delete entity.id;
-    //console.log(condition, entity);
     return db.patch('users', entity, condition);
   },
 

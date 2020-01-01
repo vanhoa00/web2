@@ -503,6 +503,28 @@ ul, ol {
 }
 
 
+.watch-list-btn {
+  position: relative;
+  border: 2px solid transparent;
+  height: 40px;
+  padding: 0 30px;
+  background-color: #ef233c;
+  color: #FFF;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 40px;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+
+.watch-list-btn:hover {
+  background-color: #FFF;
+  color: #D10024;
+  border-color: #D10024;
+}
+
+
 /*=========================================================
   09 -> CHECKOUT PAGE
 ===========================================================*/

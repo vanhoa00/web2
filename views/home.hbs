@@ -16,7 +16,13 @@
     </div>
     <div class="card-footer bg-transparent border-0 add-to-cart">
       <h6 class="product-price">{{format current_price}}</h6>
-      <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+      <form method="POST" action="user/watchlist">
+        <input type="hidden" name="id" value="{{authUser.id}}">
+        <input type="hidden" name="id_pro" value="{{id_pro}}">
+        <button class="watch-list-btn" type="submit">
+          Add to watch list
+        </button>
+      </form>
     </div>
   </div>
 </div>

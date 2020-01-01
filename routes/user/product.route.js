@@ -6,17 +6,11 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const rows = await productModel.all();
+  console.log(res.locals.isAuthenticated);
+
   res.render('home', {
     products: rows,
     empty: rows.length === 0,
-  });
-})
-
-router.post('/', async (req, res) => {
-  const rows = await productModel.search(req.body.key);
-  res.render('home', {
-    products: rows,
-    empty: rows.length === 0
   });
 })
 
@@ -73,6 +67,14 @@ router.post('/search', async (req, res) => {
   });
 })
 
+router.get('/categories/:id', async (req, res) => {
+  const rows = await productModel.getCategory(req.params.id);
+  console.log(rows);
+  res.render('home', {
+    products: rows,
+    empty: rows.length === 0,
+  });
+})
 
 
 module.exports = router;
