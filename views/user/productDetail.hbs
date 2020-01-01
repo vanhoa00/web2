@@ -135,18 +135,28 @@
                 </dl>
             </div>
             <!--Add to cart-->
-            <div class="row mt-2 ml-5">
+            <div class="row mt-2 ml-5 mb-2">
                 <form method="POST">
                     <div class="row mb-2">  
                         <input type="number" name="price" class="col-6 mr-2 ml-3" style="width: 240px" placeholder="Nhập giá . . . ">         
                         <button class="btn btn-success btn-block col-5" {{#if isAuthenticated}} type="submit" {{else}} formaction="/user/login" {{/if}}style="width: 240px">
-                        Start bidding!
+                            Start bidding!
                         </button>
                     </div>
-                    <button class="btn btn-success btn-block" onclick="window.location.href = '/user/login';" >
-                        Buy Now
-                    </button>
                 </form>
+                <button class="btn btn-success btn-block mb-2 mr-4" onclick="window.location.href = '/user/login';" >
+                    Buy Now
+                </button>
+                <form method="POST" action="/user/watchlist" id="frmWatchList">
+                    <div class="row">
+                        <input type="hidden" name="id" value="{{authUser.id}}">
+                        <input type="hidden" name="id_pro" value="{{product.id_pro}}">
+                    </div>
+                </form>
+                <button class="watch-list-btn btn-block mr-4"
+                {{#if isAuthenticated}} type="submit" onclick="javascript: $('#frmWatchList').submit();" {{else}} onclick="window.location.href = '/user/login';" {{/if}}>
+                    Add to watch list
+                </button>
 
 
             </div>

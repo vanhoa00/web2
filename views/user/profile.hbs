@@ -117,7 +117,7 @@
 				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="favProduct">
-				<table class="table table-hover mt-2">
+				{{!-- <table class="table table-hover mt-2">
 					<thead>
 						<tr>
 							<th>Tên sản phẩm</th>
@@ -142,7 +142,37 @@
 							<td>july@example.com</td>
 						</tr>
 					</tbody>
-				</table>
+				</table> --}}
+				<div class="row">
+
+					{{#if this.empty}}
+					<div class="card-body">
+						<p class="card-text">
+							Không có dữ liệu.
+						</p>
+					</div>
+					{{else}}
+					{{#each this.watchlist}}
+					<div class="col-sm-3">
+						<div class="card product" style="height: 400px">
+							<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+							onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+							<div class="card-body tdspkhac"
+							onclick="window.location.href = '/product/{{id_pro}}';">
+								<a href="/product/{{id_pro}}">{{name_pro}}</a>
+							</div>
+							<div class="card-footer bg-transparent border-0 add-to-cart">
+								<h6 class="product-price">{{format current_price}}</h6>
+								<button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+							</div>
+						</div>
+					</div>
+
+					{{/each}}
+
+					{{/if}}
+
+				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="aucProduct">
 				<table class="table table-hover mt-2">

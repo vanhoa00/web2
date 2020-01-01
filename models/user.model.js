@@ -20,4 +20,6 @@ module.exports = {
   upgrade_list: () => db.load('select * from users where Permission = 2'),
   upgrade: user_id => db.upgrade('users', { id: user_id }),
   downgrade: user_id => db.downgrade('users', { id: user_id }),
+  addWatchList: entity => db.add('watch_list', entity),
+  getWatchList: id => db.load(`SELECT * FROM watch_list wl, products p WHERE wl.id_pro = p.id_pro and id = ${id}`),
 };

@@ -69,8 +69,12 @@ router.post('/register', async (req, res) => {
   res.render('user/Register');
 });
 
-router.get('/profile', async (req, res) => {
-  res.render('user/profile');
+router.get('/profile/:id', async (req, res) => {
+  const rows = await userModel.getWatchList(req.params.id);
+  res.render('user/profile', {
+    watchlist: rows,
+    empty: rows.length === 0,
+  });
 })
 
 
@@ -88,15 +92,11 @@ router.post('/sellproduct', async (req, res) => {
     files = req.files;
     if(files.length != 3)
     {
-      console.log(req.body);
-
       return res.render('user/sellProduct', {
         err_message: 'Invalid files'
       });
     }
     else {
-      console.log(req.body);
-
       const insert = req.body;
   
       delete insert.buocGia;
@@ -136,14 +136,14 @@ router.post('/login', async (req, res) => {
  req.session.isAuthenticated = true;
  req.session.authUser = user;
 
- console.log(req.query.retUrl)
-
  const url = req.query.retUrl || '/';
  res.redirect(url);
 });
 
 router.post('/watchlist', (req, res) => {
-  console.log(req.body);
+  const entity = req.body;
+  const rows = userModel.addWatchList(entity);
+  res.redirect(req.headers.referer);
 });
 
 router.post('/logout', (req, res) => {

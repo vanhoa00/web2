@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   const rows = await productModel.all();
   console.log(res.locals.isAuthenticated);
-
   res.render('home', {
     products: rows,
     empty: rows.length === 0,
