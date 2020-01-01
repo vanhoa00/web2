@@ -82,11 +82,13 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form method="POST">
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="2">Category 02</option>
+                        <form method="POST" action="/search">
+                            <select class="input-select" name="id_cat">
+                                <option value="-1">All Categories</option>
+                                <option value="3">Điện thoại</option>
+                                <option value="4">Laptop</option>
+                                <option value="16">Xe máy</option>
+                                <option value="17">Xe ô tô</option>
                             </select>
                             <input class="input" placeholder="Search here" name="key" id="key">
                             <button class="search-btn" type="submit">Search</button>

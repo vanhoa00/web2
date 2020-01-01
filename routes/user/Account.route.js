@@ -96,23 +96,6 @@ router.post('/sellproduct', async (req, res) => {
     }
     else {
       console.log(req.body);
-      // const name_pro = req.body.name_pro;
-      // const current_price = req.body.bidPrice;
-      // const buynow_price = req.body.buynow_price;
-      // const description = req.body.description;
-      // const time_start = '2019-12-25 00:00:00';
-      // const time_end = '2020-01-25 00:00:00';
-
-      // const insert = req.body;
-      // delete insert.bidPrice;
-      // delete insert.buocGia;
-      // insert.current_price = current_price;
-      // insert.id_sel = res.locals.authUser.id;
-      // insert.time_start = time_start;
-      // insert.time_end = time_end;
-      // console.log(insert);
-
-      //const result = productModel.add(insert);
 
       const insert = req.body;
   
@@ -121,6 +104,7 @@ router.post('/sellproduct', async (req, res) => {
       insert.time_start = '2019-12-25 00:00:00';
       insert.time_end = '2020-01-25 00:00:00';
       insert.status_pro = 1;
+      insert.qty_img = 3;
 
       const result = productModel.add(insert);
 

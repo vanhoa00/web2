@@ -14,6 +14,6 @@ module.exports = {
   	const id_pro = {id_pro: entity.id_pro};
   	db.update_price('products', current_price, id_pro);
   },
-  search: key => db.load(`select * from products where name_pro like '%${key}%'`),
+  search: (id_cat, key) => db.load(`select * from products where name_pro like '%${key}%'${id_cat}`),
   getID: () =>  db.load(`SELECT MAX(id_pro) id FROM products`),
 };

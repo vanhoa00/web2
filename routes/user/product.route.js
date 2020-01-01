@@ -61,6 +61,18 @@ router.post('/product/:id', async (req, res) => {
   });
 })
 
+router.post('/search', async (req, res) => {
+  if(req.body.id_cat == -1) req.body.id_cat ="";
+  else req.body.id_cat = " and id_cat = " + req.body.id_cat;
+
+  const rows = await productModel.search(req.body.id_cat, req.body.key);
+  console.log(rows);
+  res.render('search', {
+    products: rows,
+    empty: rows.length === 0
+  });
+})
+
 
 
 module.exports = router;
