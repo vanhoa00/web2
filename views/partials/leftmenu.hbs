@@ -1,36 +1,10 @@
 
 <div class="card shadow mr-3">
+	{{#if isAdmin}}
 	<h4 class="card-header">
-		{{#ifCond authUser.Permission 3}}
 		Chức năng
-
-		{{else}}
-		Categories
-
-		{{/ifCond}}
 	</h4>
 	<div class="list-group list-group-flush">
-		{{!-- {{#each listfunc}}
-		<a class="list-group-item list-group-item-action text-left font-weight-bold" style="color: blue;" href="{{router}}" data-toggle="collapse"
-			aria-expanded="false" data-target="#submenu-{{id_func}}" aria-controls="submenu-{{id_func}}">
-			{{name_func}}
-			<span class="float-right"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-		</a>
-		{{#each ../detailfunc}}
-		{{#ifCond id_parent ../id_func}}
-		<div id="submenu-{{../id_func}}" class="collapse submenu">
-			<div class="list-group list-group-flush">
-				
-				<a  href="{{router}}" class="list-group-item list-group-item-action text-left">
-					<i class="fa fa-laptop"	aria-hidden="true"></i> 
-					{{name_func}}
-				</a>
-			</div>
-
-		</div>
-		{{/ifCond}}
-		{{/each}}
-		{{/each}} --}}
 		{{#each listfunc}}
 		<button class="list-group-item list-group-item-action text-left font-weight-bold" style="color: blue;" 
 		onclick="window.location.href='{{router}}'">
@@ -38,4 +12,28 @@
 		</button>
 		{{/each}}
 	</div>
+	
+	{{else}}
+		{{#each listCat}}
+		<button class="list-group-item list-group-item-action text-left font-weight-bold" style="color: blue;" href="{{router}}" data-toggle="collapse"
+			aria-expanded="false" data-target="#submenu-{{id}}" aria-controls="submenu-{{id}}">
+			{{name}}
+			<span class="float-right"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+		</button>
+			{{#each ../detailCat}}
+			{{#ifCond id_parent ../id}}
+			<div id="submenu-{{../id}}" class="collapse submenu">
+				<div class="list-group list-group-flush">
+					
+					<a  href="{{router}}" class="list-group-item list-group-item-action text-left">
+						<i class="fa fa-laptop"	aria-hidden="true"></i> 
+						{{name}}
+					</a>
+				</div>
+
+			</div>
+			{{/ifCond}}
+			{{/each}}
+		{{/each}}
+	{{/if}}
 </div>

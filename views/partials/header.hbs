@@ -9,7 +9,7 @@
                 </ul>
             </div>
             <form id="frmLogout" method="post" action="/user/logout"></form>
-
+            <form id="frmAdminLogout" method="post" action="/admin/logout"></form>
             <div class="pull-right">
                 <ul class="header-links">
                     <li>
@@ -30,6 +30,19 @@
                             </div>
                         </div>
                         {{else}}
+                        {{#if isAdmin}}
+                            <div class="dropdown show">
+                            <a class="dropdown-toggle" href="" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                                {{authAdmin.username}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                                style="background-color: #1E1F29;">
+                                <a class="dropdown-item" href="javascript: $('#frmAdminLogout').submit();">Log out</a>
+                            </div>
+                        </div>
+                        {{else}}
                         <div class="dropdown show">
                             <a class="dropdown-toggle" href="" id="dropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,6 +55,7 @@
                                 <a class="dropdown-item" href="/user/register">Register</a>
                             </div>
                         </div>
+                        {{/if}}
                         {{/if}}
                     </li>
                 </ul>

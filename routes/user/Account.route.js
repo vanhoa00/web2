@@ -88,6 +88,8 @@ router.post('/sellproduct', async (req, res) => {
     files = req.files;
     if(files.length != 3)
     {
+      console.log(req.body);
+
       return res.render('user/sellProduct', {
         err_message: 'Invalid files'
       });
@@ -113,6 +115,7 @@ router.post('/sellproduct', async (req, res) => {
       //const result = productModel.add(insert);
 
       const insert = req.body;
+  
       delete insert.buocGia;
       insert.id_sel = res.locals.authUser.id;
       insert.time_start = '2019-12-25 00:00:00';

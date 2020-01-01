@@ -7,15 +7,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 <script>
-$('#fuMain').fileinput({
-    theme: 'fa',
-    dropZoneEnabled: false,
-    allowedFileExtensions: ['png', 'jpg', 'gif'],
-});
+    $('#fuMain').fileinput({
+        theme: 'fa',
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['png', 'jpg', 'gif'],
+    });
 </script>
 
 <script type="text/javascript">
-$('#customFileLang').on('change',function(){
+    $('#customFileLang').on('change', function () {
         //get the file name
         var fileName = $(this).val();
         //replace the "Choose a file" label
@@ -24,19 +24,19 @@ $('#customFileLang').on('change',function(){
 </script>
 
 <script
-  src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
+    src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
 <script>
-  tinymce.init({
-    selector: '#description',
-    height: 600,
-    plugins: 'paste image link autolink lists table media',
-    menubar: false,
-    toolbar: [
-      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
-      'forecolor backcolor',
-      'table link image media',
-    ],
-  });
+    tinymce.init({
+        selector: '#description',
+        height: 600,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+            'forecolor backcolor',
+            'table link image media',
+        ],
+    });
 </script>
 {{/section}}
 <form method="post" enctype="multipart/form-data">
@@ -60,8 +60,8 @@ $('#customFileLang').on('change',function(){
                     <h5>Tên sản phẩm</h5>
                 </dt>
                 <dd>
-                    <input type="text" class="form-control form-control-xs" name="name_pro" id="name_pro" style="width: 700px;"
-                    placeholder="Nhập tên sản phẩm">
+                    <input type="text" class="form-control form-control-xs" name="name_pro" id="name_pro"
+                        style="width: 700px;" placeholder="Nhập tên sản phẩm">
                 </dd>
                 <!--Price: giá mua ngay-->
                 <dt>
@@ -69,7 +69,9 @@ $('#customFileLang').on('change',function(){
                 </dt>
                 <dd style="width: 700px">
                     <div class="file-loading">
-                        <input id="fuMain" name="fuMain" type="file" class="file" multiple data-show-upload="false" data-show-caption="true" accept="image/*" data-msg-placeholder="Select {files} for upload...">
+                        <input id="fuMain" name="fuMain" type="file" class="file" multiple data-show-upload="false"
+                            data-show-caption="true" accept="image/*"
+                            data-msg-placeholder="Select {files} for upload...">
                     </div>
                 </dd>
                 <!--Description: Thông tin người bán và điểm đánh giá-->
@@ -77,46 +79,45 @@ $('#customFileLang').on('change',function(){
                     <h5>Giá khởi điểm</h5>
                 </dt>
                 <dd>
-                    <input type="number" class="form-control form-control-xs" name="current_price" id="current_price" style="width: 700px;"
-                    placeholder="Nhập giá sản phẩm">
+                    <input type="number" class="form-control form-control-xs" name="current_price" id="current_price"
+                        style="width: 700px;" placeholder="Nhập giá sản phẩm">
                 </dd>
                 <dt>
                     <h5>Bước giá</h5>
                 </dt>
                 <dd>
-                    <input type="number" class="form-control form-control-xs" name="buocGia" id="buocGia" style="width: 700px;"
-                    placeholder="Nhập bước giá">
+                    <input type="number" class="form-control form-control-xs" name="buocGia" id="buocGia"
+                        style="width: 700px;" placeholder="Nhập bước giá">
                 </dd>
                 <dt>
                     <h5>Giá mua ngay</h5>
                 </dt>
                 <dd>
                     <input type="number" class="form-control form-control-xs" name="buynow_price" id="buynow_price"
-                    style="width: 700px;" placeholder="Nhập giá mua ngay">
+                        style="width: 700px;" placeholder="Nhập giá mua ngay">
                 </dd>
                 <dt>
                     <h5>Mô tả sản phẩm</h5>
                 </dt>
                 <dd>
-                    <textarea class="form-control" id="description" name="description" style="width: 700px;" placeholder="Nhập mô tả"></textarea>
+                    <textarea class="form-control" id="description" name="description" style="width: 700px;"
+                        placeholder="Nhập mô tả"></textarea>
                 </dd>
                 <dt>
                     <h5>Tự động gia hạn</h5>
                 </dt>
                 <dd>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-1">
-                        <label for="payment-1">
-                            <span></span>
-                            Có
-                        </label>
-                    </div>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-2">
-                        <label for="payment-2">
-                            <span></span>
-                            Không
-                        </label>
+                    {{!-- <input class="form-check-input" type="checkbox" value="1" name="extend" id="extend">
+                    <label>
+                        Có
+                    </label> --}}
+                    <div class="form-check">
+                        <div>
+                            <input type="radio" name="extend" value="1" id="">Có
+                        </div>
+                        <div>
+                            <input type="radio" name="extend" value="0" id="">không
+                        </div>
                     </div>
                 </dd>
             </dl>

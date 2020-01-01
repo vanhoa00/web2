@@ -13,4 +13,5 @@ module.exports = {
   },
 
   cat_lv1: () => db.load('select * from categories where id_parent = 0'),
+  cat_lv2: () => db.load('select * from categories where id_parent <> 0'),
 };
