@@ -5,6 +5,7 @@ const userModel = require('../../models/user.model');
 const router = express.Router();
 
 
+
 router.get('/', async (req, res) => {
   const rows = await productModel.all();
   res.render('home', {
@@ -25,45 +26,66 @@ router.post('/', async (req, res) => {
 router.get('/product/:id', async (req, res) => {
   const rows = await productModel.detail(req.params.id);
   const temp = await productModel.relate();
-  const checkWatchList = await userModel.checkWatchList(req.params.id);
-
-  if (rows.length === 0) {
-    throw new Error('Invalid product id');
-  }
-  if(checkWatchList.length == 0){
-    res.render('user/productDetail', {
-      product: rows[0],
-      relate: temp,
-      watchlist:'1',
-    });
+  const history = await userModel.getHistory(req.params.id);
+  //console.log(history[0].username);
+  
+  if(res.locals.isAuthenticated){
+    const getWatchList = await userModel.getWatchList(res.locals.authUser.id);
+    if (rows.length === 0) {
+      throw new Error('Invalid product id');
+    }
+    if(getWatchList.length == 0){
+      res.render('user/productDetail', {
+        product: rows[0],
+        relate: temp,
+        history: history,
+        watchlist:'1',
+      });
+    }
+    else {
+      res.render('user/productDetail', {
+        product: rows[0],
+        history: history,
+        relate: temp
+      });    
+    }
   }
   else {
     res.render('user/productDetail', {
       product: rows[0],
+      history: history,
       relate: temp
-    });    
+    }); 
   }
+
 
 })
 
 router.post('/product/:id', async (req, res) => {
-  const entity = req.body;
-  entity.id_pro = req.params.id;
-  entity.price = req.body.price;
-  entity.id = req.session.authUser.id;
-
-  const rows = await productModel.bidding(entity);
   const temp = await productModel.detail(req.params.id);
   const temp1 = await productModel.relate();
-  delete entity.id;
-  console.log(entity);
+  if(req.body.price < temp[0].current_price || req.body.price > temp[0].buynow_price){
+    return res.render('user/productDetail', {
+      product: temp[0],
+      relate: temp1,
+      err_message: 'Giá đưa ra phải cao hơn giá hiện tại và thấp hơn giá mua ngay'
+    });
+  }
+  else {
+    const entity = req.body;
+    entity.id_pro = req.params.id;
+    entity.price = req.body.price;
+    entity.id = req.session.authUser.id;
 
-  const temp2 = await productModel.update_price(entity);
+    const rows = await productModel.bidding(entity);
+    delete entity.id;
+    const temp2 = await productModel.update_price(entity);
+    res.render('user/productDetail', {
+      product: temp[0],
+      relate: temp1
+    });
+  }
 
-  res.render('user/productDetail', {
-    product: temp[0],
-    relate: temp1
-  });
 })
 
 router.post('/search', async (req, res) => {

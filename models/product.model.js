@@ -17,4 +17,5 @@ module.exports = {
   search: (id_cat, key) => db.load(`select * from products where name_pro like '%${key}%'${id_cat}`),
   getID: () =>  db.load(`SELECT MAX(id_pro) id FROM products`),
   getCategory: id_cat =>  db.load(`select * from products where id_cat = ${id_cat}`),
+  
 };

@@ -26,9 +26,8 @@ module.exports = {
   downgrade: user_id => db.downgrade('users', { id: user_id }),
   addWatchList: entity => db.add('watch_list', entity),
   delWatchList: entity => db.del('watch_list', entity),
-  getWatchList: id => db.load(`SELECT * FROM watch_list wl, products p WHERE wl.id_pro = p.id_pro and id = ${id}`),
+  getWatchList: id => db.load(`SELECT * FROM watch_list wl, products p WHERE wl.id_pro = p.id_pro and wl.id = ${id}`),
   checkUserName: username => db.load(`select * from users where username = ${username}`),
   checkPhone: Phone => db.load(`select * from users where Phone = ${username}`),
-  checkWatchList: id_pro => db.load(`select * from watch_list where id_pro = ${id_pro}`),
-
+  getHistory: id_pro => db.load(`SELECT * FROM users u, bidding_history b WHERE u.id = b.id and b.id_pro = ${id_pro}`),
 };
