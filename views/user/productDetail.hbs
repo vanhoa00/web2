@@ -147,18 +147,29 @@
                 <button class="btn btn-success btn-block mb-2 mr-4" onclick="window.location.href = '/user/login';" >
                     Buy Now
                 </button>
-                <form method="POST" action="/user/watchlist" id="frmWatchList">
-                    <div class="row">
-                        <input type="hidden" name="id" value="{{authUser.id}}">
-                        <input type="hidden" name="id_pro" value="{{product.id_pro}}">
-                    </div>
-                </form>
-                <button class="watch-list-btn btn-block mr-4"
-                {{#if isAuthenticated}} type="submit" onclick="javascript: $('#frmWatchList').submit();" {{else}} onclick="window.location.href = '/user/login';" {{/if}}>
-                    Add to watch list
-                </button>
-
-
+                {{#if isAuthenticated}}
+                    {{#if watchlist}}   
+                        <form method="POST" action="/user/watchlist" id="frmWatchList">
+                            <div class="row">
+                                <input type="hidden" name="id" value="{{authUser.id}}">
+                                <input type="hidden" name="id_pro" value="{{product.id_pro}}">
+                            </div>
+                        </form>
+                        <button class="watch-list-btn btn-block mr-4" type="submit" onclick="javascript: $('#frmWatchList').submit();">
+                            Add to watch list
+                        </button>
+                    {{else}}
+                        <form method="POST" action="/user/removewatchlist" id="frmWatchList">
+                            <div class="row">
+                                <input type="hidden" name="id" value="{{authUser.id}}">
+                                <input type="hidden" name="id_pro" value="{{product.id_pro}}">
+                            </div>
+                        </form>
+                        <button class="watch-list-btn btn-block mr-4"type="submit" onclick="javascript: $('#frmWatchList').submit();">
+                            Remove to watch list
+                        </button>
+                    {{/if}}
+                {{/if}}
             </div>
             
             <!--Đang suy nghĩ-->

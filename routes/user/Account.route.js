@@ -27,7 +27,9 @@ router.get('/register', async (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  if(req.body.username == ""){
+  const checkUsername = await userModel.checkUserName(req.body.username);
+  const checkPhone = await userModel.checkUserName(req.body.Phone);
+  if(req.body.username == "" || checkUsername.length != 0){
     return res.render('user/Register', {
       err_message: 'Invalid Username'
     });
@@ -42,11 +44,11 @@ router.post('/register', async (req, res) => {
       err_message: 'Invalid Email'
     });
   };
-  // if(req.body.Phone.length() != 10 || req.body.Phone.length() != 11){
-  //   return res.render('user/Register', {
-  //     err_message: 'Invalid Phone'
-  //   });
-  // };
+  if(checkPhone.length != 0){
+    return res.render('user/Register', {
+      err_message: 'Invalid Phone'
+    });
+  };
 
   if(req.body.raw_password != req.body.repass){
     return res.render('user/Register', {
@@ -77,6 +79,38 @@ router.get('/profile/:id', async (req, res) => {
   });
 })
 
+router.get('/profile/:id/changepassword', async (req, res) => {
+  res.render('user/changePassword');
+})
+
+router.post('/profile/:id/changepassword', async (req, res) => {
+  const user = await userModel.single(req.params.id);
+
+  const rs = await bcrypt.compareSync(req.body.current_password, user[0].password);
+  if (rs === false){
+    return res.render('user/changePassword', {
+      err_message: 'Wrong password'
+    });
+  }
+
+
+  if(req.body.raw_password != req.body.repass){
+    return res.render('user/changePassword', {
+      err_message: 'Invalid Password'
+    });
+  };
+  const entity = req.body;
+  const N = 10;
+  const hash = bcrypt.hashSync(req.body.raw_password, N);
+  entity.password = hash;
+  entity.id = req.params.id;
+  delete entity.raw_password;
+  delete entity.current_password;
+  delete entity.repass;
+
+  const result = await userModel.updatePassWord(entity);
+  return res.render('user/changePassword');
+})
 
 router.get('/sellproduct', async (req, res) => {
   res.render('user/sellProduct');
@@ -126,7 +160,7 @@ router.post('/login', async (req, res) => {
   }
   const rs = bcrypt.compareSync(req.body.password, user.password);
   if (rs === false){
-   return res.render('user/Login', {
+    return res.render('user/Login', {
     err_message: 'Login failed'
   });
  }
@@ -140,9 +174,15 @@ router.post('/login', async (req, res) => {
  res.redirect(url);
 });
 
-router.post('/watchlist', (req, res) => {
+router.post('/watchlist', async (req, res) => {
   const entity = req.body;
   const rows = userModel.addWatchList(entity);
+  res.redirect(req.headers.referer);
+});
+
+router.post('/removewatchlist', async (req, res) => {
+  const entity = req.body;
+  const rows = userModel.delWatchList(entity);
   res.redirect(req.headers.referer);
 });
 
@@ -151,8 +191,6 @@ router.post('/logout', (req, res) => {
   req.session.authUser = null;
   res.redirect(req.headers.referer);
 });
-
-
 
 
 module.exports = router;

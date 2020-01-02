@@ -2,51 +2,50 @@
 <link rel="stylesheet" href="/assets/css/user.css">
 {{/section}}
 <div class="container emp-profile">
-	<form method="post">
-		<div class="row">
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Trang cá nhân</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#favProduct" role="tab" data-toggle="tab">Sản phẩm yêu thích</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#aucProduct" role="tab" data-toggle="tab">Sản phẩm đang đấu giá</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#selProduct" role="tab" data-toggle="tab">Sản phẩm đã đăng bán</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#rate" role="tab" data-toggle="tab">Xem đánh giá</a>
-				</li>
-			</ul>
-		</div>
+	<div class="row">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Trang cá nhân</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#favProduct" role="tab" data-toggle="tab">Sản phẩm yêu thích</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#aucProduct" role="tab" data-toggle="tab">Sản phẩm đang đấu giá</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#selProduct" role="tab" data-toggle="tab">Sản phẩm đã đăng bán</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#rate" role="tab" data-toggle="tab">Xem đánh giá</a>
+			</li>
+		</ul>
+	</div>
 
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane fade show active" id="profile">
-				<div class="row mt-5">
-					<div class="col-md-4">
-						<div class="profile-img">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-							alt="" />
-							<div class="file btn btn-lg btn-primary">
-								Change Photo
-								<input type="file" name="file" />
-							</div>
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane fade show active" id="profile">
+			<div class="row mt-5">
+				<div class="col-md-4">
+					<div class="profile-img">
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+						alt="" />
+						<div class="file btn btn-lg btn-primary">
+							Change Photo
+							<input type="file" name="file" />
 						</div>
 					</div>
-					<div class="col-md-5">
-						<div class="profile-head">
-							<h5>
-								{{authUser.name}}
-							</h5>
-							<p class="proile-rating">RANKINGS : <span>8/10</span></p>
-							<ul class="nav nav-tabs" id="myTab" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#About"
-									role="tab" aria-controls="home" aria-selected="true">About</a>
-								</li>
+				</div>
+				<div class="col-md-5">
+					<div class="profile-head">
+						<h5>
+							{{authUser.name}}
+						</h5>
+						<p class="proile-rating">RANKINGS : <span>8/10</span></p>
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#About"
+								role="tab" aria-controls="home" aria-selected="true">About</a>
+							</li>
 {{!-- 								<li class="nav-item">
 									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#Timeline"
 									role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
@@ -56,10 +55,14 @@
 					</div>
 					<div class="col-md-3">
 						<div class="edit_profile">
-							<input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+							<button class="profile-edit-btn" >
+								Edit Profile
+							</button>
 						</div>
 						<div>
-							<input type="submit" class="profile-edit-btn" name="btnAddMore" value="Change password" />
+							<button class="profile-edit-btn" onclick="window.location.href='/user/profile/{{authUser.id}}/changepassword';">
+								Change password
+							</button>
 						</div>
 
 					</div>
@@ -107,8 +110,8 @@
 									<div class="col-md-6">
 										<p>{{#if authUser.Permission}}Seller
 											{{else}}Bidder
-                                			{{/if}}
-                                		</p>
+											{{/if}}
+										</p>
 									</div>
 								</div>
 							</div>
@@ -117,32 +120,6 @@
 				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="favProduct">
-				{{!-- <table class="table table-hover mt-2">
-					<thead>
-						<tr>
-							<th>Tên sản phẩm</th>
-							<th>Người đăng bán</th>
-							<th>Email</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Nokia 5</td>
-							<td>Doe</td>
-							<td>john@example.com</td>
-						</tr>
-						<tr>
-							<td>Dell vostro 5568</td>
-							<td>Moe</td>
-							<td>mary@example.com</td>
-						</tr>
-						<tr>
-							<td>Xiaomi Redmi note 5</td>
-							<td>Dooley</td>
-							<td>july@example.com</td>
-						</tr>
-					</tbody>
-				</table> --}}
 				<div class="row">
 
 					{{#if this.empty}}
@@ -159,93 +136,92 @@
 							onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
 							<div class="card-body tdspkhac"
 							onclick="window.location.href = '/product/{{id_pro}}';">
-								<a href="/product/{{id_pro}}">{{name_pro}}</a>
-							</div>
-							<div class="card-footer bg-transparent border-0 add-to-cart">
-								<h6 class="product-price">{{format current_price}}</h6>
-								<button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
-							</div>
+							<a href="/product/{{id_pro}}">{{name_pro}}</a>
+						</div>
+						<div class="card-footer bg-transparent border-0 add-to-cart">
+							<h6 class="product-price">{{format current_price}}</h6>
+							<button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
 						</div>
 					</div>
-
-					{{/each}}
-
-					{{/if}}
-
 				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane fade" id="aucProduct">
-				<table class="table table-hover mt-2">
-					<thead>
-						<tr>
-							<th>Tên sản phẩm</th>
-							<th>Người đăng bán</th>
-							<th>Thời gian còn lại</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Samsung note 9</td>
-							<td>Kshiti</td>
-							<td>10 days</td>
-						</tr>
-						<tr>
-							<td>MSI GL65</td>
-							<td>Kshiti</td>
-							<td>15 days</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div role="tabpanel" class="tab-pane fade" id="selProduct">
-				<table class="table table-hover mt-2">
-					<thead>
-						<tr>
-							<th>Tên sản phẩm</th>
-							<th>Người đăng bán</th>
-							<th>Tình Trạng</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Samsung note 9</td>
-							<td>Kshiti</td>
-							<td>Đang bán</td>
-						</tr>
-						<tr>
-							<td>MSI GL65</td>
-							<td>Kshiti</td>
-							<td>Đang bán</td>
-						</tr>
-						<tr>
-							<td>Acer Nito 5</td>
-							<td>Kshiti</td>
-							<td>Đã bán</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div role="tabpanel" class="tab-pane fade" id="rate">
-				<table class="table table-hover mt-2">
-					<thead>
-						<tr>
-							<th>Tên sản phẩm</th>
-							<th>UserName</th>
-							<th>Rate</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Acer Nito 5</td>
-							<td>Doe</td>
-							<td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 
+				{{/each}}
+
+				{{/if}}
+
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="aucProduct">
+			<table class="table table-hover mt-2">
+				<thead>
+					<tr>
+						<th>Tên sản phẩm</th>
+						<th>Người đăng bán</th>
+						<th>Thời gian còn lại</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Samsung note 9</td>
+						<td>Kshiti</td>
+						<td>10 days</td>
+					</tr>
+					<tr>
+						<td>MSI GL65</td>
+						<td>Kshiti</td>
+						<td>15 days</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="selProduct">
+			<table class="table table-hover mt-2">
+				<thead>
+					<tr>
+						<th>Tên sản phẩm</th>
+						<th>Người đăng bán</th>
+						<th>Tình Trạng</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Samsung note 9</td>
+						<td>Kshiti</td>
+						<td>Đang bán</td>
+					</tr>
+					<tr>
+						<td>MSI GL65</td>
+						<td>Kshiti</td>
+						<td>Đang bán</td>
+					</tr>
+					<tr>
+						<td>Acer Nito 5</td>
+						<td>Kshiti</td>
+						<td>Đã bán</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="rate">
+			<table class="table table-hover mt-2">
+				<thead>
+					<tr>
+						<th>Tên sản phẩm</th>
+						<th>UserName</th>
+						<th>Rate</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Acer Nito 5</td>
+						<td>Doe</td>
+						<td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
+	</div>
 
-	</form>
+
 </div>

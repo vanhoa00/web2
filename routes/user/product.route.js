@@ -1,12 +1,12 @@
 const express = require('express');
 const productModel = require('../../models/product.model');
+const userModel = require('../../models/user.model');
 
 const router = express.Router();
 
 
 router.get('/', async (req, res) => {
   const rows = await productModel.all();
-  console.log(res.locals.isAuthenticated);
   res.render('home', {
     products: rows,
     empty: rows.length === 0,
@@ -25,13 +25,25 @@ router.post('/', async (req, res) => {
 router.get('/product/:id', async (req, res) => {
   const rows = await productModel.detail(req.params.id);
   const temp = await productModel.relate();
+  const checkWatchList = await userModel.checkWatchList(req.params.id);
+
   if (rows.length === 0) {
     throw new Error('Invalid product id');
   }
-  res.render('user/productDetail', {
-    product: rows[0],
-    relate: temp
-  });
+  if(checkWatchList.length == 0){
+    res.render('user/productDetail', {
+      product: rows[0],
+      relate: temp,
+      watchlist:'1',
+    });
+  }
+  else {
+    res.render('user/productDetail', {
+      product: rows[0],
+      relate: temp
+    });    
+  }
+
 })
 
 router.post('/product/:id', async (req, res) => {
