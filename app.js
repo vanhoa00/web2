@@ -25,6 +25,7 @@ const hbs = exphbs.create({
     section: hbs_sections(),
     format: val => numeral(val).format('0,0') + ' đ',
     dateformat: val => dateFormat(val, "dd/mm/yyyy"),
+    datetimeformat: val => dateFormat(val, "dd/mm/yyyy HH:MM:ss"),
     ifCond: function(v1, v2, options) {
       if(v1 === v2) {
         return options.fn(this);

@@ -16,6 +16,7 @@ module.exports = {
   load: sql => mysql_query(sql),
   add: (tableName, entity) => mysql_query(`insert into ${tableName} set ?`, entity),
   del: (tableName, condition) => mysql_query(`delete from ${tableName} where ?`, condition),
+  del_watchlist: (id, id_pro) => mysql_query(`delete from watch_list where id = ${id} and id_pro = ${id_pro}`),
   update_password: (tableName, id, password) => mysql_query(`update ${tableName} set ? where ?`, [password, id]),
   update_stt: (tableName, condition) => mysql_query(`update ${tableName} set status = 2 where ?`, condition),
   update_price: (tableName, current_price, id_pro) => mysql_query(`update ${tableName} set ? where ?`, [current_price, id_pro]),

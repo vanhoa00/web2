@@ -8,8 +8,16 @@
   {{#each this.products}}
   <div class="col-sm-3">
     <div class="card product" style="height: 400px">
-      <img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
-      onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+      <div class="product-img">
+        <img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+        onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+        {{#if isnew}}
+        <div class="product-label">
+          <span class="new">NEW</span>
+        </div>
+        {{/if}}
+      </div>
+      
       <div class="card-body tdspkhac"
       onclick="window.location.href = '/product/{{id_pro}}';">
       <a href="/product/{{id_pro}}">{{name_pro}}</a>

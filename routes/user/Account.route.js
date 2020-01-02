@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const multer  = require('multer')
+const dateFormat = require('dateformat');
 const validator = require("email-validator");
 var modifyFilename = require('modify-filename');
 const userModel = require('../../models/user.model');
@@ -135,8 +136,10 @@ router.post('/sellproduct', async (req, res) => {
   
       delete insert.buocGia;
       insert.id_sel = res.locals.authUser.id;
-      insert.time_start = '2019-12-25 00:00:00';
-      insert.time_end = '2020-01-25 00:00:00';
+
+      const now = moment().startOf('second');
+      insert.time_start = dateFormat(now, "yyyy-mm/dd HH:MM:ss");
+      insert.time_end = dateFormat(now.add(15, 'day'), "yyyy-mm/dd HH:MM:ss");
       insert.status_pro = 1;
       insert.qty_img = 3;
 

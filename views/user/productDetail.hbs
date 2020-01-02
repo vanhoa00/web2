@@ -14,94 +14,94 @@
                 <div id="showImg">
                     <img class="showImg" src="/images/Product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">
                     <script>
-                        var i = 0;
-                        var images = [];
-                        images[0] = '<img class="showImg" src="/images/product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">';
-                        images[1] = '<img class="showImg" src="/images/product/{{product.id_pro}}_2.jpg" alt="Second slide" id="img2">';
-                        images[2] = '<img class="showImg" src="/images/product/{{product.id_pro}}_3.jpg" alt="Third slide" id="img3">';
-                        function showImg() {
-                            var temp = document.getElementById('showImg');
+                    var i = 0;
+                    var images = [];
+                    images[0] = '<img class="showImg" src="/images/product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">';
+                    images[1] = '<img class="showImg" src="/images/product/{{product.id_pro}}_2.jpg" alt="Second slide" id="img2">';
+                    images[2] = '<img class="showImg" src="/images/product/{{product.id_pro}}_3.jpg" alt="Third slide" id="img3">';
+                    function showImg() {
+                        var temp = document.getElementById('showImg');
                             //document.slide.src = images[i];
                             temp.innerHTML = images[i];
                         }
-                    </script>
+                        </script>
+                    </div>
                 </div>
-            </div>
-            <!--list detail images of product-->
-            <div class="row mt-1">
-                <div class="listImg">
-                    <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_1.jpg" id="0"></div>
-                    <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_2.jpg" id="1"></div>
-                    <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_3.jpg" id="2"></div>
-                    <script>
+                <!--list detail images of product-->
+                <div class="row mt-1">
+                    <div class="listImg">
+                        <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_1.jpg" id="0"></div>
+                        <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_2.jpg" id="1"></div>
+                        <div onclick="pushImg(event)"><img class="Img demo cursor" src="/images/product/{{product.id_pro}}_3.jpg" id="2"></div>
+                        <script>
                         function pushImg() {
                             var abc = document.getElementById('showImg');
                             abc.innerHTML = images[event.target.attributes[2].nodeValue];
                         }
-                    </script>
+                        </script>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--Right content-->
-        <div class="col-sm-6">
-            <!--Name of product-->
-            <div class="row justify-content-center">
-                <h2 class="product-name">{{product.name_pro}}</h2>
-            </div>
-            <!--Product detail-->
-            <div class="row ml-5">
-                <dl class="dl-horizontal">
-                    <!--Current Price: giá hiện tại-->
-                    <dt>
-                        <h5><b>Giá hiện tại:</b></h5>
-                    </dt>
-                    <dd>
-                        <h5>{{format product.current_price}}</h5>
-                    </dd>
-                    <!--Price: giá mua ngay-->
-                    <dt>
-                        <h5><b>Giá mua ngay:</b></h5>
-                    </dt>
-                    <dd>
-                        <h5>{{ format product.buynow_price}}</h5>
-                    </dd>
-                    <!--Description: Thông tin người bán và điểm đánh giá-->
-                    <dt>
-                        <h5><b>Người bán:</b></h5>
-                    </dt>
-                    <dd>
-                        <h5>{{product.name}}</h5>
-                    </dd>
-                    <dt>
-                        <h5><b>Điểm đánh giá:</b></h5>
-                    </dt>
-                    <dd>
-                        <i class="fa fa-star checked" aria-hidden="false"></i>
-                        <i class="fa fa-star checked" aria-hidden="false"></i>
-                        <i class="fa fa-star checked" aria-hidden="false"></i>
-                        <i class="fa fa-star checked" aria-hidden="false"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                    </dd>
-                    <!--Description: Thông tin người đặt giá cao nhất hiện tại & điểm đánh giá-->
-                    <dt>
-                        <h5><b>Người đặt giá cao nhất:</b></h5>
-                    </dt>
-                    <dd>
-                        <h5>ABC</h5>
-                    </dd>
-                    <!--Time start: Thời điểm đăng-->
-                    <dt>
-                        <h5><b>Time start:</b></h5>
-                    </dt>
-                    <dd>
-                        <h5>{{dateformat product.time_start}}</h5>
-                    </dd>
-                    <!--Time out: Thời điểm kết thúc, count down-->
-                    <dt>
-                        <h5><b>Time out:</b></h5>
-                        <h5><b id="countDown"></b></h5>
-                    </dt>
-                    <script type="text/javascript">
+            <!--Right content-->
+            <div class="col-sm-6">
+                <!--Name of product-->
+                <div class="row justify-content-center">
+                    <h2 class="product-name">{{product.name_pro}}</h2>
+                </div>
+                <!--Product detail-->
+                <div class="row ml-5">
+                    <dl class="dl-horizontal">
+                        <!--Current Price: giá hiện tại-->
+                        <dt>
+                            <h5><b>Giá hiện tại:</b></h5>
+                        </dt>
+                        <dd>
+                            <h5>{{format product.current_price}}</h5>
+                        </dd>
+                        <!--Price: giá mua ngay-->
+                        <dt>
+                            <h5><b>Giá mua ngay:</b></h5>
+                        </dt>
+                        <dd>
+                            <h5>{{ format product.buynow_price}}</h5>
+                        </dd>
+                        <!--Description: Thông tin người bán và điểm đánh giá-->
+                        <dt>
+                            <h5><b>Người bán:</b></h5>
+                        </dt>
+                        <dd>
+                            <h5>{{product.name}}</h5>
+                        </dd>
+                        <dt>
+                            <h5><b>Điểm đánh giá:</b></h5>
+                        </dt>
+                        <dd>
+                            <i class="fa fa-star checked" aria-hidden="false"></i>
+                            <i class="fa fa-star checked" aria-hidden="false"></i>
+                            <i class="fa fa-star checked" aria-hidden="false"></i>
+                            <i class="fa fa-star checked" aria-hidden="false"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </dd>
+                        <!--Description: Thông tin người đặt giá cao nhất hiện tại & điểm đánh giá-->
+                        <dt>
+                            <h5><b>Người đặt giá cao nhất:</b></h5>
+                        </dt>
+                        <dd>
+                            <h5>ABC</h5>
+                        </dd>
+                        <!--Time start: Thời điểm đăng-->
+                        <dt>
+                            <h5><b>Time start:</b></h5>
+                        </dt>
+                        <dd>
+                            <h5>{{datetimeformat product.time_start}}</h5>
+                        </dd>
+                        <!--Time out: Thời điểm kết thúc, count down-->
+                        <dt>
+                            <h5><b>Time out:</b></h5>
+                            <h5><b id="countDown"></b></h5>
+                        </dt>
+                        <script type="text/javascript">
                         //https://www.w3schools.com/howto/howto_js_countdown.asp
                         // Set the date we're counting down to
                         var countDownDate = new Date("{{product.time_end}}").getTime();
@@ -111,171 +111,178 @@
 
                           // Get today's date and time
                           var now = new Date().getTime();
-                            
+                          
                           // Find the distance between now and the count down date
                           var distance = countDownDate - now;
-                            
+                          
                           // Time calculations for days, hours, minutes and seconds
                           var days = Math.floor(distance / (1000 * 60 * 60 * 24));
                           var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                           var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                            
+                          
                           // Output the result in an element with id="demo"
                           document.getElementById("countDown").innerHTML = days + "d " + hours + "h "
                           + minutes + "m " + seconds + "s ";
-                            
+                          
                           // If the count down is over, write some text 
                           if (distance < 0) {
                             clearInterval(x);
                             document.getElementById("demo").innerHTML = "EXPIRED";
-                          }
-                        }, 1000);
-                    </script>
-                </dl>
-            </div>
-            <!--Add to cart-->
-            {{#if err_message}}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{err_message}}
-
-            </div>
-            {{/if}}
-            <div class="row mt-2 ml-5 mb-2">
-                <form method="POST">
-                    <div class="row mb-2">  
-                        <input type="number" name="price" class="col-6 mr-2 ml-3" style="width: 240px" placeholder="Nhập giá . . . ">         
-                        <button class="btn btn-success btn-block col-5" {{#if isAuthenticated}} type="submit" {{else}} formaction="/user/login" {{/if}}style="width: 240px">
-                            Start bidding!
-                        </button>
-                    </div>
-                </form>
-                <button class="btn btn-success btn-block mb-2 mr-4" onclick="window.location.href = '/user/login';" >
-                    Buy Now
-                </button>
-                {{#if isAuthenticated}}
-                    {{#if watchlist}}   
-                        <form method="POST" action="/user/watchlist" id="frmWatchList">
-                            <div class="row">
-                                <input type="hidden" name="id" value="{{authUser.id}}">
-                                <input type="hidden" name="id_pro" value="{{product.id_pro}}">
-                            </div>
-                        </form>
-                        <button class="watch-list-btn btn-block mr-4" type="submit" onclick="javascript: $('#frmWatchList').submit();">
-                            Add to watch list
-                        </button>
-                    {{else}}
-                        <form method="POST" action="/user/removewatchlist" id="frmWatchList">
-                            <div class="row">
-                                <input type="hidden" name="id" value="{{authUser.id}}">
-                                <input type="hidden" name="id_pro" value="{{product.id_pro}}">
-                            </div>
-                        </form>
-                        <button class="watch-list-btn btn-block mr-4"type="submit" onclick="javascript: $('#frmWatchList').submit();">
-                            Remove to watch list
-                        </button>
-                    {{/if}}
-                {{/if}}
-
-            </div>
-            
-            <!--Đang suy nghĩ-->
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Product tab -->
-            <div class="col-md-12">
-                <div id="product-tab">
-                    <!-- product tab nav -->
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="des-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true" style="border-bottom: 0;">Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="detail-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false" style="border-bottom: 0;">History</a>
-                        </li>
-                    </ul>
-                    <!-- /product tab nav -->
-
-                    <!-- product tab content -->
-                    <div class="tab-content profile-tab">
-                        <!-- tab1  -->
-                        <div class="tab-pane fade show active" id="tab1" role="tablist">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{{product.description}}}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /tab1  -->
-
-                        <!-- tab2  -->
-                        <div class="tab-pane fade" id="tab2" role="tablist">
-                            <div class="row">
-                                <div class="col-md-12 mb-5">
-                                    {{#if history}}
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <td width="50%">UserName</td>
-                                                <td>Giá</td>
-                                            </tr>
-                                    {{#each this.history}}
-                                            <tr>
-                                                <td width="50%">{{username}}</td>
-                                                <td>{{price}}</td>
-                                            </tr>
-                                    {{/each}}
-                                    {{else}}
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                Không có dữ liệu.
-                                            </p>
-                                        </div>
-                                    {{/if}}                
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /tab2  -->
-                    </div>
-                    <!-- /product tab content  -->
+                        }
+                    }, 1000);
+                        </script>
+                    </dl>
                 </div>
-            </div>
-            <!-- /product tab -->
-        </div>
-    </div>
-    <!--/PRODUCT-->
+                <!--Add to cart-->
+                {{#if err_message}}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{err_message}}
 
-    <!--RELATED PRODUCT: 5 SẢN PHẨM CÙNG CHUYÊN MỤC-->
-    <div class="row">
-        <h3>RELATED PRODUCT</h3>
-    </div>
-    <div class="row">
-        {{#each this.relate}}
-        <div class="col-sm-3">
-            <div class="card product" style="height: 400px">
-              <img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
-              onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+                </div>
+                {{/if}}
+                <div class="row mt-2 ml-5 mb-2">
+                    <form method="POST">
+                        <div class="row mb-2">  
+                            <input type="number" name="price" class="col-6 mr-2 ml-3" style="width: 240px" placeholder="Nhập giá . . . ">         
+                            <button class="btn btn-success btn-block col-5" {{#if isAuthenticated}} type="submit" {{else}} formaction="/user/login" {{/if}}style="width: 240px">
+                                Start bidding!
+                            </button>
+                        </div>
+                    </form>
+                    <button class="btn btn-success btn-block mb-2 mr-4" onclick="window.location.href = '/user/login';" >
+                        Buy Now
+                    </button>
+                    {{#if isAuthenticated}}
+                    {{#if watchlist}}   
+                    <form method="POST" action="/user/watchlist" id="frmWatchList">
+                        <div class="row">
+                            <input type="hidden" name="id" value="{{authUser.id}}">
+                            <input type="hidden" name="id_pro" value="{{product.id_pro}}">
+                        </div>
+                    </form>
+                    <button class="watch-list-btn btn-block mr-4" type="submit" onclick="javascript: $('#frmWatchList').submit();">
+                        Add to watch list
+                    </button>
+                    {{else}}
+                    <form method="POST" action="/user/removewatchlist" id="frmWatchList">
+                        <div class="row">
+                            <input type="hidden" name="id" value="{{authUser.id}}">
+                            <input type="hidden" name="id_pro" value="{{product.id_pro}}">
+                        </div>
+                    </form>
+                    <button class="watch-list-btn btn-block mr-4"type="submit" onclick="javascript: $('#frmWatchList').submit();">
+                        Remove to watch list
+                    </button>
+                    {{/if}}
+                    {{/if}}
+
+                </div>
+                
+                <!--Đang suy nghĩ-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Product tab -->
+                <div class="col-md-12">
+                    <div id="product-tab">
+                        <!-- product tab nav -->
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="des-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true" style="border-bottom: 0;">Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="detail-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false" style="border-bottom: 0;">History</a>
+                            </li>
+                        </ul>
+                        <!-- /product tab nav -->
+
+                        <!-- product tab content -->
+                        <div class="tab-content profile-tab">
+                            <!-- tab1  -->
+                            <div class="tab-pane fade show active" id="tab1" role="tablist">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{{product.description}}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /tab1  -->
+
+                            <!-- tab2  -->
+                            <div class="tab-pane fade" id="tab2" role="tablist">
+                                <div class="row">
+                                    <div class="col-md-12 mb-5">
+                                        {{#if history}}
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="50%">UserName</td>
+                                                    <td>Giá</td>
+                                                </tr>
+                                                {{#each this.history}}
+                                                <tr>
+                                                    <td width="50%">{{username}}</td>
+                                                    <td>{{format price}}</td>
+                                                </tr>
+                                                {{/each}}
+                                                {{else}}
+                                                <div class="card-body">
+                                                    <p class="card-text">
+                                                        Không có dữ liệu.
+                                                    </p>
+                                                </div>
+                                                {{/if}}                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /tab2  -->
+                        </div>
+                        <!-- /product tab content  -->
+                    </div>
+                </div>
+                <!-- /product tab -->
+            </div>
+        </div>
+        <!--/PRODUCT-->
+
+        <!--RELATED PRODUCT: 5 SẢN PHẨM CÙNG CHUYÊN MỤC-->
+        <div class="row">
+            <h3>RELATED PRODUCT</h3>
+        </div>
+        <div class="row">
+            {{#each this.relate}}
+            <div class="col-sm-3">
+                <div class="card product" style="height: 400px">
+                  <div class="product-img">
+                    <img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+                    onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+                    {{#if isnew}}
+                    <div class="product-label">
+                      <span class="new">NEW</span>
+                  </div>
+                  {{/if}}
+              </div>
               <div class="card-body tdspkhac"
               onclick="window.location.href = '/product/{{id_pro}}';">
-                <a href="views/productDetail.html">{{name_pro}}</a>
-              </div>
-              <div class="card-footer bg-transparent border-0 add-to-cart">
-                <h6 class="product-price">{{format current_price}}</h6>
-                <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
-              </div>
-            </div>
+              <a href="views/productDetail.html">{{name_pro}}</a>
+          </div>
+          <div class="card-footer bg-transparent border-0 add-to-cart">
+            <h6 class="product-price">{{format current_price}}</h6>
+            <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
         </div>
-        {{/each}} 
-        
     </div>
-    <!--/RELATED PRODUCT-->
+</div>
+{{/each}} 
+
+</div>
+<!--/RELATED PRODUCT-->
 </div>
 <!--/SHOW DETAIL ITEMS-->
