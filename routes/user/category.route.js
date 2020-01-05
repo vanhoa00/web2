@@ -1,51 +1,47 @@
 const express = require('express');
+const productModel = require('../../models/product.model');
 const categoryModel = require('../../models/category.model');
-
+const config = require('../../config/default.json');
 const router = express.Router();
 
 
-router.get('/', async (req, res) => {
-  const rows = await categoryModel.all();
-  res.render('vwCategories/index', {
-    categories: rows,
-    empty: rows.length === 0
-  });
-})
+router.get('/:id/products', async (req, res) => {
 
-router.get('/add', (req, res) => {
-  res.render('vwCategories/add');
-})
+  const catId = req.params.id;
+  const limit = config.paginate.limit;
 
-router.post('/add', async (req, res) => {
-  const result = await categoryModel.add(req.body);
-  //console.log(result.insertId);
-  res.render('vwCategories/add');
-})
+  const page = req.query.page || 1;
+  if (page < 1) page = 1;
+  const offset = (page - 1) * config.paginate.limit;
 
-router.get('/err', (req, res) => {
+  const [total, rows] = await Promise.all([
+    productModel.countByCat(catId), // Số lượng sản phẩm theo danh mục
+    productModel.pageByCat(catId, offset) // Số lượng sản phẩm mỗi trang
+  ]);
 
-  throw new Error('error occured');
-})
-
-router.get('/edit/:id', async (req, res) => {
-  const rows = await categoryModel.single(req.params.id);
-  if (rows.length === 0) {
-    throw new Error('Invalid category id');
+  // const total = await productModel.countByCat(catId);
+  let nPages = Math.floor(total / limit);
+  if (total % limit > 0) nPages++;
+  const page_numbers = [];
+  for (i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page
+    })
   }
-  res.render('vwCategories/edit', {
-    category: rows[0]
+  var prev_value = +page - 1;
+  if(prev_value === 0)
+    prev_value = 1;
+  const next_value = +page + 1;
+
+  // const rows = await productModel.pageByCat(catId, offset);
+  res.render('user/vwProducts/allByCat', {
+    products: rows,
+    empty: rows.length === 0,
+    page_numbers,
+    prev_value,
+    next_value,
   });
-})
-
-router.post('/patch', async (req, res) => {
-  const result = await categoryModel.patch(req.body);
-  res.redirect('/admin/categories');
-})
-
-router.post('/del', async (req, res) => {
-  const result = await categoryModel.del(req.body.id);
-  // console.log(result.affectedRows);
-  res.redirect('/admin/categories');
 })
 
 module.exports = router;

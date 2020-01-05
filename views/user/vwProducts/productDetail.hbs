@@ -1,3 +1,7 @@
+<script>
+    document.title = "{{product.name_pro}}";
+</script>
+
 <!--SHOW DETAIL ITEMS-->
 <div class="container" style="margin-top: 30px;">
     <!--BREADCRUMB-->
@@ -12,7 +16,7 @@
             <!--Narbar product images-->
             <div class="row" width=100;>
                 <div id="showImg">
-                    <img class="showImg" src="/images/Product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">
+                    <img class="showImg" src="/images/product/{{product.id_pro}}_1.jpg" alt="First slide" id="img1">
                     <script>
                     var i = 0;
                     var images = [];
@@ -150,6 +154,8 @@
                             <input type="number" name="price" class="col-6 mr-2 ml-3" style="width: 240px" placeholder="Nhập giá . . . ">         
                             <button class="btn btn-success btn-block col-5" {{#if isAuthenticated}} type="submit" {{else}} formaction="/user/login" {{/if}}style="width: 240px">
                                 Start bidding!
+                                {{!-- Nếu đặt giá thành công, gửi mail về --}}
+                                
                             </button>
                         </div>
                     </form>

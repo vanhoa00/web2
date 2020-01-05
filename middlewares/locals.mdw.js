@@ -11,6 +11,8 @@ module.exports = function (app) {
     //user
     const cat_lv1 = await catModel.cat_lv1();
     const cat_lv2 = await catModel.cat_lv2();
+  
+
     res.locals.listCat = cat_lv1;
     res.locals.detailCat = cat_lv2;
 

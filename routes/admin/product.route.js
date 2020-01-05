@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const rows = await productModel.all();
-  res.render('vwProducts/index', {
+  res.render('backend/vwProducts/index', {
     products: rows,
     empty: rows.length === 0
   });
@@ -20,7 +20,7 @@ router.get('/view/:id', async (req, res) => {
   if (rows.length === 0) {
     throw new Error('Invalid product id');
   }
-  res.render('vwProducts/view', {
+  res.render('backend/vwProducts/view', {
     product: rows[0]
   });
 })

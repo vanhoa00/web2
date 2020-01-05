@@ -8,10 +8,13 @@ module.exports = function (app) {
 
 	app.use('/admin/users', require('../routes/admin/user.route'));
 
-	// chưa biết dasboard của admin là gì, lấy tạm sản phẩm
 	app.use('/admin', require('../routes/admin/admin.route'));
 
 	app.use('/', require('../routes/user/product.route'));
+
+	app.use('/search', require('../routes/user/search.route'));
+
+	app.use('/categories', require('../routes/user/category.route'));
 
 	app.use('/user', require('../routes/user/Account.route'));
 

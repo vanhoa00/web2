@@ -8,6 +8,12 @@ var modifyFilename = require('modify-filename');
 const userModel = require('../../models/user.model');
 const productModel = require('../../models/product.model');
 
+// dùng để sử dụng captcha
+//const bodyParser = require('body-parser');
+//const request = require('request');
+//
+
+
 const router = express.Router();
 var temp = 1;
 var ID = 0;
@@ -29,7 +35,10 @@ router.get('/register', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   const checkUsername = await userModel.checkUserName(req.body.username);
+  console.log(checkUsername);
   const checkPhone = await userModel.checkUserName(req.body.Phone);
+  const checkEmail = await userModel.checkEmail(req.body.Email);
+  
   if(req.body.username == "" || checkUsername.length != 0){
     return res.render('user/Register', {
       err_message: 'Invalid Username'
@@ -40,7 +49,7 @@ router.post('/register', async (req, res) => {
       err_message: 'Invalid Name or Phone'
     });
   };
-  if(validator.validate(req.body.Email) === false){
+  if(validator.validate(req.body.Email) === false || checkEmail.length != 0){
     return res.render('user/Register', {
       err_message: 'Invalid Email'
     });
@@ -55,6 +64,32 @@ router.post('/register', async (req, res) => {
     return res.render('user/Register', {
       err_message: 'Invalid Password'
     });
+
+  // // check captcha
+  // if (!req.body.captcha)
+  //   return res.json({ success: false, msg: 'Please select captcha' });
+  
+  // const secretKey = "6LfaQMwUAAAAAD7nO6IQEq2xSoTmCGlGIc2Fx5gP";
+
+  // // Verify URL
+  // const query = stringify({
+  //   secret: secretKey,
+  //   response: req.body.captcha,
+  //   remoteip: req.connection.remoteAddress
+  // });
+  // const verifyURL = `https://google.com/recaptcha/api/siteverify?${query}`;
+
+  // // Make a request to verifyURL
+  // const body = await fetch(verifyURL).then(res => res.json());
+
+  // // If not successful
+  // if (body.success !== undefined && !body.success)
+  //   return res.json({ success: false, msg: 'Failed captcha verification' });
+
+  // // If successful
+  // return res.json({ success: true, msg: 'Captcha passed' });
+  // // /check captcha
+
   };
 
   const N = 10;
@@ -79,6 +114,31 @@ router.get('/profile/:id', async (req, res) => {
     empty: rows.length === 0,
   });
 })
+
+router.get('/profile/:id/changeprofile', async (req, res) => {
+  const user = await userModel.single(req.params.id);
+  res.render('user/changeProfile', {
+    user: user[0],
+    empty: user.length === 0,
+  });
+})
+
+router.post('/profile/:id/changeprofile', async (req, res) => {
+  const entity = req.body;
+  const username = req.body.username;
+  delete entity.username;
+  console.log(entity);
+  console.log(username);
+  entity.DateOfBirth = moment(req.body.DateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
+  
+  const result = await userModel.updateProfile(entity, username);
+  const user = await userModel.single(req.params.id);
+  res.render('user/changeProfile', {
+    user: user[0],
+    empty: user.length === 0,
+  });
+})
+
 
 router.get('/profile/:id/changepassword', async (req, res) => {
   res.render('user/changePassword');
@@ -111,6 +171,12 @@ router.post('/profile/:id/changepassword', async (req, res) => {
 
   const result = await userModel.updatePassWord(entity);
   return res.render('user/changePassword');
+})
+
+router.post('/profile/:id/upgrade_suggest', async (req, res) => {
+  const result = await userModel.upgrade_suggest(req.body.id);
+  console.log(req.body.id);
+  res.redirect(req.headers.referer);
 })
 
 router.get('/sellproduct', async (req, res) => {
@@ -194,6 +260,7 @@ router.post('/logout', (req, res) => {
   req.session.authUser = null;
   res.redirect(req.headers.referer);
 });
+
 
 
 module.exports = router;

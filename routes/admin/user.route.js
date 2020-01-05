@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const rows = await userModel.all();
-  res.render('vwUsers/index', {
+  res.render('backend/vwUsers/index', {
     users: rows,
     empty: rows.length === 0
   });
@@ -19,7 +19,7 @@ router.get('/err', (req, res) => {
 
 router.get('/upgradelist', async (req, res) => {
   const rows = await userModel.upgrade_list();
-  res.render('vwUsers/upgradelist', {
+  res.render('backend/vwUsers/upgradelist', {
     users: rows,
     empty: rows.length === 0
   });
@@ -31,7 +31,7 @@ router.get('/detail/:id', async (req, res) => {
   if (rows.length === 0) {
     throw new Error('Invalid user id');
   }
-  res.render('vwUsers/detail', {
+  res.render('backend/vwUsers/detail', {
     user: rows[0]
   });
 })
@@ -41,7 +41,7 @@ router.get('/edit/:id', async (req, res) => {
   if (rows.length === 0) {
     throw new Error('Invalid user id');
   }
-  res.render('vwUsers/edit', {
+  res.render('backend/vwUsers/edit', {
     user: rows[0]
   });
 })

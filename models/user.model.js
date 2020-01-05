@@ -21,14 +21,17 @@ module.exports = {
     const password = {password: entity.password};
     db.update_password('users', id, password);
   },
+  updateProfile: (entity, username)=> db.update_profile('users', entity, username),  
   upgrade_list: () => db.load('select * from users where Permission = 2'),
   upgrade: user_id => db.upgrade('users', { id: user_id }),
+  upgrade_suggest: user_id => db.upgrade_suggest('users', { id: user_id }),
   downgrade: user_id => db.downgrade('users', { id: user_id }),
   addWatchList: entity => db.add('watch_list', entity),
   delWatchList: condition => db.del_watchlist(condition.id, condition.id_pro),
   getWatchList: id => db.load(`SELECT * FROM watch_list wl, products p WHERE wl.id_pro = p.id_pro and wl.id = ${id}`),
   checkWatchList: (id, id_pro) => db.load(`SELECT * FROM watch_list wl, products p WHERE wl.id_pro = p.id_pro and wl.id = ${id} and wl.id_pro = ${id_pro}`),
-  checkUserName: username => db.load(`select * from users where username = ${username}`),
-  checkPhone: Phone => db.load(`select * from users where Phone = ${username}`),
+  checkUserName: username => db.load(`select * from users where username = '${username}'`),
+  checkEmail: email => db.load(`select * from users where email = ${email}`),
+  checkPhone: Phone => db.load(`select * from users where Phone = ${Phone}`),
   getHistory: id_pro => db.load(`SELECT * FROM users u, bidding_history b WHERE u.id = b.id and b.id_pro = ${id_pro}`),
 };

@@ -1,24 +1,50 @@
 const express = require('express');
 const productModel = require('../../models/product.model');
 const userModel = require('../../models/user.model');
+const config = require('../../config/default.json');
 const moment = require('moment');
+const nodemailer =  require('nodemailer');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const rows = await productModel.all();
-  for (var i = rows.length - 1; i >= 0; i--) {
+  const top5product = await productModel.top5product();
+  const top5price = await productModel.top5price();
+  const top5date = await productModel.top5date();
+  for (var i = top5product.length - 1; i >= 0; i--) {
     const now = moment().startOf('second');
-    if(moment(now).isBefore(moment(rows[i].time_start).add(24, 'hours'), 'hours')){
-      rows[i].isnew = true;
+    if(moment(now).isBefore(moment(top5product[i].time_start).add(48, 'hours'), 'hours')){
+      top5product[i].isnew = true;
     }
     else {
-      rows[i].isnew = false;
+      top5product[i].isnew = false;
     }
   }
-  res.render('home', {
-    products: rows,
-    empty: rows.length === 0,
+
+  for (var i = top5price.length - 1; i >= 0; i--) {
+    const now = moment().startOf('second');
+    if(moment(now).isBefore(moment(top5price[i].time_start).add(48, 'hours'), 'hours')){
+      top5price[i].isnew = true;
+    }
+    else {
+      top5price[i].isnew = false;
+    }
+  }
+
+  for (var i = top5date.length - 1; i >= 0; i--) {
+    const now = moment().startOf('second');
+    if(moment(now).isBefore(moment(top5date[i].time_start).add(48, 'hours'), 'hours')){
+      top5date[i].isnew = true;
+    }
+    else {
+      top5date[i].isnew = false;
+    }
+  }
+
+  res.render('user/vwProducts/allProduct', {
+    top5product,
+    top5price,
+    top5date,
   });
 })
 
@@ -33,7 +59,7 @@ router.post('/', async (req, res) => {
       rows[i].isnew = false;
     }
   }
-  res.render('home', {
+  res.render('user/vwProducts/allProduct', {
     products: rows,
     empty: rows.length === 0
   });
@@ -61,7 +87,7 @@ router.get('/product/:id', async (req, res) => {
       throw new Error('Invalid product id');
     }
     if(checkWatchList.length == 0){
-      res.render('user/productDetail', {
+      res.render('user/vwProducts/productDetail', {
         product: rows[0],
         relate: temp,
         history: history,
@@ -69,7 +95,7 @@ router.get('/product/:id', async (req, res) => {
       });
     }
     else {
-      res.render('user/productDetail', {
+      res.render('user/vwProducts/productDetail', {
         product: rows[0],
         history: history,
         relate: temp
@@ -77,7 +103,7 @@ router.get('/product/:id', async (req, res) => {
     }
   }
   else {
-    res.render('user/productDetail', {
+    res.render('user/vwProducts/productDetail', {
       product: rows[0],
       history: history,
       relate: temp
@@ -98,7 +124,7 @@ router.post('/product/:id', async (req, res) => {
     }
   }
   if(req.body.price < temp[0].current_price || req.body.price > temp[0].buynow_price){
-    return res.render('user/productDetail', {
+    return res.render('user/vwProducts/productDetail', {
       product: temp[0],
       relate: temp1,
       err_message: 'Giá đưa ra phải cao hơn giá hiện tại và thấp hơn giá mua ngay'
@@ -113,43 +139,57 @@ router.post('/product/:id', async (req, res) => {
     const rows = await productModel.bidding(entity);
     delete entity.id;
     const temp2 = await productModel.update_price(entity);
-    res.render('user/productDetail', {
+
+    // Send email =================================================
+    var transporter =  nodemailer.createTransport({ // config mail server
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+          user: 'ngmanh2104@gmail.com', //Tài khoản gmail vừa tạo
+          pass: 'ngocmanh99' //Mật khẩu tài khoản gmail vừa tạo
+      },
+      tls: {
+          // do not fail on invalid certs
+          rejectUnauthorized: false
+      }
+    });
+    var content = '';
+    content += `
+      <div style="padding: 10px; background-color: #003375">
+          <div style="padding: 10px; background-color: white;">
+              <h4 style="color: #0085ff">Gửi mail từ hệ thống đấu giá online</h4>
+              <span style="color: black">Đây là mail test</span>
+          </div>
+      </div>
+    `;
+    const mainOptions = { // thiết lập đối tượng, nội dung gửi mail
+      from: 'ngmanh2104@gmail.com',
+      to: req.session.authUser.email,
+      subject: 'Test Nodemailer',
+      text: 'Your text is here',//Thường thi mình không dùng cái này thay vào đó mình sử dụng html để dễ edit hơn
+      html: content //Nội dung html mình đã tạo trên kia :))
+    }
+    transporter.sendMail(mainOptions, function(err, info){
+      if (err) {
+          console.log(err);
+          //req.flash('mess', 'Lỗi gửi mail: '+err); //Gửi thông báo đến người dùng
+          //res.redirect('/');
+      } else {
+          console.log('Message sent: ' +  info.response);
+          //req.flash('mess', 'Một email đã được gửi đến tài khoản của bạn'); //Gửi thông báo đến người dùng
+          //res.redirect('/');
+      }
+    });
+
+  // /Send email ================================================
+    res.render('user/vwProducts/productDetail', {
       product: temp[0],
       relate: temp1,
     });
   }
 
+  
 })
-
-router.post('/search', async (req, res) => {
-  if(req.body.id_cat == -1) req.body.id_cat ="";
-  else req.body.id_cat = " and id_cat = " + req.body.id_cat;
-
-  const rows = await productModel.search(req.body.id_cat, req.body.key);
-  for (var i = rows.length - 1; i >= 0; i--) {
-    const now = moment().startOf('second');
-    if(moment(now).isBefore(moment(rows[i].time_start).add(24, 'hours'), 'hours')){
-      rows[i].isnew = true;
-    }
-    else {
-      rows[i].isnew = false;
-    }
-  }
-  console.log(rows);
-  res.render('search', {
-    products: rows,
-    empty: rows.length === 0
-  });
-})
-
-router.get('/categories/:id', async (req, res) => {
-  const rows = await productModel.getCategory(req.params.id);
-  console.log(rows);
-  res.render('home', {
-    products: rows,
-    empty: rows.length === 0,
-  });
-})
-
 
 module.exports = router;

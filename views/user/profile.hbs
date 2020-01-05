@@ -1,6 +1,9 @@
 {{#section 'css'}}
 <link rel="stylesheet" href="/assets/css/user.css">
 {{/section}}
+<script>
+    document.title = "{{authUser.name}}";
+</script>
 <div class="container emp-profile">
 	<div class="row">
 		<ul class="nav nav-tabs" role="tablist">
@@ -28,7 +31,7 @@
 				<div class="col-md-4">
 					<div class="profile-img">
 						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-						alt="" />
+							alt="" />
 						<div class="file btn btn-lg btn-primary">
 							Change Photo
 							<input type="file" name="file" />
@@ -43,99 +46,107 @@
 						<p class="proile-rating">RANKINGS : <span>8/10</span></p>
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#About"
-								role="tab" aria-controls="home" aria-selected="true">About</a>
+								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#About" role="tab"
+									aria-controls="home" aria-selected="true">About</a>
 							</li>
-{{!-- 								<li class="nav-item">
+							{{!-- 								<li class="nav-item">
 									<a class="nav-link" id="profile-tab" data-toggle="tab" href="#Timeline"
 									role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
 								</li> --}}
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="edit_profile">
-							<button class="profile-edit-btn" >
-								Edit Profile
-							</button>
-						</div>
-						<div>
-							<button class="profile-edit-btn" onclick="window.location.href='/user/profile/{{authUser.id}}/changepassword';">
-								Change password
-							</button>
-						</div>
-
+						</ul>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-8">
-						<div class="tab-content profile-tab" id="myTabContent">
-							<div class="tab-pane fade show active ml-5" id="About" role="tablist">
-								<div class="row">
-									<div class="col-md-6">
-										<label>User Name</label>
-									</div>
-									<div class="col-md-6">
-										<p>{{authUser.username}}</p>
-									</div>
+				<div class="col-md-3">
+					<div class="edit_profile">
+						<button class="profile-edit-btn" onclick="window.location.href='/user/profile/{{authUser.id}}/changeprofile';">
+							Edit Profile
+						</button>
+					</div>
+					<div>
+						<button class="profile-edit-btn" onclick="window.location.href='/user/profile/{{authUser.id}}/changepassword';">
+							Change password
+						</button>
+					</div>
+					{{#ifCond authUser.Permission 1}}
+					<form method="POST">
+					<div class="mt-2">
+						<input type="hidden" name="id" value="{{authUser.id}}">
+						<button class="profile-edit-btn" type ="submit" formaction="/user/profile/{{authUser.id}}/upgrade_suggest">
+							Upgrade Seller
+						</button>
+					</div>
+					</form>
+					{{/ifCond}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="tab-content profile-tab" id="myTabContent">
+						<div class="tab-pane fade show active ml-5" id="About" role="tablist">
+							<div class="row">
+								<div class="col-md-6">
+									<label>User Name</label>
 								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<label>Name</label>
-									</div>
-									<div class="col-md-6">
-										<p>{{authUser.name}}</p>
-									</div>
+								<div class="col-md-6">
+									<p>{{authUser.username}}</p>
 								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<label>Email</label>
-									</div>
-									<div class="col-md-6">
-										<p>{{authUser.email}}</p>
-									</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Name</label>
 								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<label>Phone</label>
-									</div>
-									<div class="col-md-6">
-										<p>{{authUser.Phone}}</p>
-									</div>
+								<div class="col-md-6">
+									<p>{{authUser.name}}</p>
 								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<label>Permission</label>
-									</div>
-									<div class="col-md-6">
-										<p>{{#if authUser.Permission}}Seller
-											{{else}}Bidder
-											{{/if}}
-										</p>
-									</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Email</label>
+								</div>
+								<div class="col-md-6">
+									<p>{{authUser.email}}</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Phone</label>
+								</div>
+								<div class="col-md-6">
+									<p>{{authUser.Phone}}</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Permission</label>
+								</div>
+								<div class="col-md-6">
+									<p>{{#if authUser.Permission}}Seller
+										{{else}}Bidder
+										{{/if}}
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane fade" id="favProduct">
-				<div class="row">
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="favProduct">
+			<div class="row">
 
-					{{#if this.empty}}
-					<div class="card-body">
-						<p class="card-text">
-							Không có dữ liệu.
-						</p>
-					</div>
-					{{else}}
-					{{#each this.watchlist}}
-					<div class="col-sm-3">
-						<div class="card product" style="height: 400px">
-							<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+				{{#if this.empty}}
+				<div class="card-body">
+					<p class="card-text">
+						Không có dữ liệu.
+					</p>
+				</div>
+				{{else}}
+				{{#each this.watchlist}}
+				<div class="col-sm-3">
+					<div class="card product" style="height: 400px">
+						<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
 							onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
-							<div class="card-body tdspkhac"
-							onclick="window.location.href = '/product/{{id_pro}}';">
+						<div class="card-body tdspkhac" onclick="window.location.href = '/product/{{id_pro}}';">
 							<a href="/product/{{id_pro}}">{{name_pro}}</a>
 						</div>
 						<div class="card-footer bg-transparent border-0 add-to-cart">
@@ -215,7 +226,8 @@
 					<tr>
 						<td>Acer Nito 5</td>
 						<td>Doe</td>
-						<td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+						<td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+								class="fa fa-star"></i><i class="fa fa-star"></i></td>
 					</tr>
 				</tbody>
 			</table>
