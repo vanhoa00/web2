@@ -5,8 +5,7 @@ const config = require('../../config/default.json');
 const moment = require('moment');
 const router = express.Router();
 
-let id_cat;
-let key;
+let id_cat, key, temp;
 router.post('/', async (req, res) => {
     // if(req.body.id_cat == -1) req.body.id_cat ="";
     // else req.body.id_cat = " and id_cat = " + req.body.id_cat;
@@ -57,11 +56,12 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-  id_cat = req.query.id_cat;
-  key = req.query.key;
+  temp = req.query.id_cat;
   if(req.query.id_cat == -1) req.query.id_cat ="";
   else req.query.id_cat = " and id_cat = " + req.query.id_cat;
-
+  
+  id_cat = req.query.id_cat;
+  key = req.query.key;
   // const rows = await productModel.pageBySearch(req.body.id_cat, req.body.key, offset);
   const limit = config.paginate.limit;
   const page = req.query.page || 1;
@@ -86,12 +86,13 @@ router.get('/', async (req, res) => {
   }
   let nPages = Math.floor(total[0].total / limit);
   if (total[0].total % limit > 0) nPages++;
-  console.log(nPages);
   const page_numbers = [];
   for (i = 1; i <= nPages; i++) {
     page_numbers.push({
       value: i,
-      isCurrentPage: i === +page
+      isCurrentPage: i === +page,
+      _id: temp,
+      _key: key,
     })
   }
   var prev_value = +page - 1;
@@ -104,17 +105,15 @@ router.get('/', async (req, res) => {
     page_numbers,
     prev_value,
     next_value,
-    id : id_cat,
+    id : temp,
     key: key,
   });
 })
 
-
-
-router.post('/sort', async (req, res) => {
-  const methodSort = req.body.sort;
+router.get('/sort', async (req, res) => {
+  const methodSort = req.query.sort;
   const limit = config.paginate.limit;
-  console.log(limit);
+
   const page = req.query.page || 1;
   if (page < 1) page = 1;
   const offset = (page - 1) * config.paginate.limit;
@@ -150,28 +149,29 @@ router.post('/sort', async (req, res) => {
       productModel.pageBySearch(id_cat, key, offset) // Số lượng sản phẩm mỗi trang
     ]);
   }
-  console.log(total[0]);
-  console.log(limit);
   let nPages = Math.floor(total[0].total / limit);
-  console.log(nPages);
-    if (total % limit > 0) nPages++;
-    const page_numbers = [];
-    for (i = 1; i <= nPages; i++) {
-      page_numbers.push({
-        value: i,
-        isCurrentPage: i === +page
-      })
-    }
-    var prev_value = +page - 1;
-    if(prev_value === 0)
-      prev_value = 1;
-    const next_value = +page + 1;
+  if (total[0].total % limit > 0) nPages++;
+  const page_numbers = [];
+  for (i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+      _id: temp,
+      _key: key,
+    })
+  }
+  var prev_value = +page - 1;
+  if(prev_value === 0)
+    prev_value = 1;
+  const next_value = +page + 1;
   res.render('user/vwProducts/search', {
     products: rows,
     empty: rows.length === 0,
     page_numbers,
     prev_value,
     next_value,
+    id : temp,
+    key: key,
   });
 })
 
