@@ -20,6 +20,9 @@
 				<a class="nav-link" href="#selProduct" role="tab" data-toggle="tab">Sản phẩm đã đăng bán</a>
 			</li>
 			<li class="nav-item">
+				<a class="nav-link" href="#wonlist" role="tab" data-toggle="tab">Sản phẩm đã thắng</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" href="#rate" role="tab" data-toggle="tab">Xem đánh giá</a>
 			</li>
 		</ul>
@@ -134,7 +137,7 @@
 		<div role="tabpanel" class="tab-pane fade" id="favProduct">
 			<div class="row">
 
-				{{#if this.empty}}
+				{{#if this.watchlist_empty}}
 				<div class="card-body">
 					<p class="card-text">
 						Không có dữ liệu.
@@ -164,53 +167,106 @@
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="aucProduct">
 			<table class="table table-hover mt-2">
-				<thead>
-					<tr>
-						<th>Tên sản phẩm</th>
-						<th>Người đăng bán</th>
-						<th>Thời gian còn lại</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Samsung note 9</td>
-						<td>Kshiti</td>
-						<td>10 days</td>
-					</tr>
-					<tr>
-						<td>MSI GL65</td>
-						<td>Kshiti</td>
-						<td>15 days</td>
-					</tr>
-				</tbody>
+				<div class="row">
+
+					{{#if this.myAuction_empty}}
+					<div class="card-body">
+						<p class="card-text">
+							Không có dữ liệu.
+						</p>
+					</div>
+					{{else}}
+					{{#each this.myAuction}}
+					<div class="col-sm-3">
+						<div class="card product" style="height: 400px">
+							<div class="product-img">
+								<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+								onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+								{{#if isWon}}
+								<div class="product-label">
+									<span class="new">#</span>
+								</div>
+								{{/if}}
+							</div>
+							<div class="card-body tdspkhac" onclick="window.location.href = '/product/{{id_pro}}';">
+								<a href="/product/{{id_pro}}">{{name_pro}}</a>
+							</div>
+							<div class="card-footer bg-transparent border-0 add-to-cart">
+								<h6 class="product-price">{{format current_price}}</h6>
+								<button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+							</div>
+						</div>
+					</div>
+
+					{{/each}}
+
+					{{/if}}
+
+				</div>
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="selProduct">
 			<table class="table table-hover mt-2">
-				<thead>
-					<tr>
-						<th>Tên sản phẩm</th>
-						<th>Người đăng bán</th>
-						<th>Tình Trạng</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Samsung note 9</td>
-						<td>Kshiti</td>
-						<td>Đang bán</td>
-					</tr>
-					<tr>
-						<td>MSI GL65</td>
-						<td>Kshiti</td>
-						<td>Đang bán</td>
-					</tr>
-					<tr>
-						<td>Acer Nito 5</td>
-						<td>Kshiti</td>
-						<td>Đã bán</td>
-					</tr>
-				</tbody>
+				<div class="row">
+
+					{{#if this.myProduct_empty}}
+					<div class="card-body">
+						<p class="card-text">
+							Không có dữ liệu.
+						</p>
+					</div>
+					{{else}}
+					{{#each this.myProduct}}
+					<div class="col-sm-3">
+						<div class="card product" style="height: 400px">
+							<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+							onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+							<div class="card-body tdspkhac" onclick="window.location.href = '/product/{{id_pro}}';">
+								<a href="/product/{{id_pro}}">{{name_pro}}</a>
+							</div>
+							<div class="card-footer bg-transparent border-0 add-to-cart">
+								<h6 class="product-price">{{format current_price}}</h6>
+								<button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+							</div>
+						</div>
+					</div>
+
+					{{/each}}
+
+					{{/if}}
+
+				</div>
+			</table>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="wonlist">
+			<table class="table table-hover mt-2">
+				{{#if this.myWonlist_empty}}
+					<div class="card-body">
+						<p class="card-text">
+							Không có dữ liệu.
+						</p>
+					</div>
+					{{else}}
+					{{#each this.myWonlist}}
+					<div class="col-sm-3">
+						<div class="card product" style="height: 400px">
+							<div class="product-img">
+								<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+								onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+							</div>
+							<div class="card-body tdspkhac" onclick="window.location.href = '/product/{{id_pro}}';">
+								<a href="/product/{{id_pro}}">{{name_pro}}</a>
+							</div>
+							<div class="card-footer bg-transparent border-0 add-to-cart">
+								<h6 class="product-price">{{format current_price}}</h6>
+								<button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+							</div>
+						</div>
+					</div>
+
+					{{/each}}
+
+					{{/if}}
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="rate">

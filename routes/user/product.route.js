@@ -4,6 +4,7 @@ const userModel = require('../../models/user.model');
 const config = require('../../config/default.json');
 const moment = require('moment');
 const nodemailer =  require('nodemailer');
+const DataMasker = require("data-mask");
 
 const router = express.Router();
 
@@ -71,6 +72,10 @@ router.get('/product/:id', async (req, res) => {
   const temp = await productModel.relate(rows[0].id_cat);
   const history = await userModel.getHistory(req.params.id);
 
+  for (var i = history.length - 1; i >= 0; i--) {
+    history[i].username = DataMasker.maskLeft(history[i].username, 5, '*');
+  }
+
   for (var i = temp.length - 1; i >= 0; i--) {
     const now = moment().startOf('second');
     if(moment(now).isBefore(moment(temp[i].time_start).add(24, 'hours'), 'hours')){
@@ -137,7 +142,6 @@ router.post('/product/:id', async (req, res) => {
     entity.id = req.session.authUser.id;
 
     const rows = await productModel.bidding(entity);
-    delete entity.id;
     const temp2 = await productModel.update_price(entity);
 
     // Send email =================================================

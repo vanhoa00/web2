@@ -5,7 +5,7 @@ const config = require('../../config/default.json');
 const router = express.Router();
 
 
-router.get('/:id/products', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
   const catId = req.params.id;
   const limit = config.paginate.limit;

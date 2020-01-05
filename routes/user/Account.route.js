@@ -35,7 +35,6 @@ router.get('/register', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   const checkUsername = await userModel.checkUserName(req.body.username);
-  console.log(checkUsername);
   const checkPhone = await userModel.checkUserName(req.body.Phone);
   const checkEmail = await userModel.checkEmail(req.body.Email);
   
@@ -108,10 +107,26 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/profile/:id', async (req, res) => {
-  const rows = await userModel.getWatchList(req.params.id);
+  const watchlist = await userModel.getWatchList(req.params.id);
+  const myProduct = await productModel.getMyProduct(req.params.id);
+  const myAuction = await productModel.getMyAuction(req.params.id);
+  const myWonlist = await productModel.getMyWonlist(req.params.id);
+  console.log(myAuction);
+  for (var i = myAuction.length - 1; i >= 0; i--) {
+    if(myAuction[i].id_winner == req.params.id){
+      myAuction[i].isWon = true;
+    }
+  }
+  console.log(myAuction);
   res.render('user/profile', {
-    watchlist: rows,
-    empty: rows.length === 0,
+    watchlist: watchlist,
+    myProduct: myProduct,
+    myAuction: myAuction,
+    myWonlist: myWonlist,
+    watchlist_empty: watchlist.length === 0,
+    myProduct_empty: myProduct.length === 0,
+    myAuction_empty: myAuction.length === 0,
+    myWonlist_empty: myWonlist.length === 0,
   });
 })
 
@@ -208,6 +223,7 @@ router.post('/sellproduct', async (req, res) => {
       insert.time_end = dateFormat(now.add(15, 'day'), "yyyy-mm/dd HH:MM:ss");
       insert.status_pro = 1;
       insert.qty_img = 3;
+      insert.id_winner = req.body.id_sel;
 
       const result = productModel.add(insert);
 
