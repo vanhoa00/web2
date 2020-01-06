@@ -89,7 +89,7 @@ router.get('/product/:id', async (req, res) => {
   const rows = await productModel.detail(req.params.id);
   const temp = await productModel.relate(rows[0].id_cat);
   const history = await userModel.getHistory(req.params.id);
-
+  rows[0].price_suggest = rows[0].current_price + rows[0].step;
   for (var i = history.length - 1; i >= 0; i--) {
     history[i].username = DataMasker.maskLeft(history[i].username, 5, '*');
   }
@@ -204,9 +204,9 @@ router.post('/product/:id', async (req, res) => {
     const mainOptions = { // thiết lập đối tượng, nội dung gửi mail
       from: 'ngmanh2104@gmail.com',
       to: req.session.authUser.email,
-      subject: 'Test Nodemailer',
-      text: 'Your text is here',//Thường thi mình không dùng cái này thay vào đó mình sử dụng html để dễ edit hơn
-      html: content //Nội dung html mình đã tạo trên kia :))
+      subject: 'Website auctions online',
+      text: 'Chúc mừng bạn đã bidding thành công!',//Thường thi mình không dùng cái này thay vào đó mình sử dụng html để dễ edit hơn
+      //html: content //Nội dung html mình đã tạo trên kia :))
     }
     transporter.sendMail(mainOptions, function (err, info) {
       if (err) {
@@ -230,6 +230,39 @@ router.post('/product/:id', async (req, res) => {
 
 router.post('/product/:id/buynow', async (req, res) => {
   const rows = await productModel.buynow(req.body);
+  // Send email =================================================
+  var transporter = nodemailer.createTransport({ // config mail server
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'ngmanh2104@gmail.com', //Tài khoản gmail vừa tạo
+      pass: 'ngocmanh99' //Mật khẩu tài khoản gmail vừa tạo
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false
+    }
+  });
+  const mainOptions = { // thiết lập đối tượng, nội dung gửi mail
+    from: 'ngmanh2104@gmail.com',
+    to: req.session.authUser.email,
+    subject: 'Website auctions online',
+    text: 'Chúc mừng bạn mua thành công sản phẩm',//Thường thi mình không dùng cái này thay vào đó mình sử dụng html để dễ edit hơn
+  }
+  transporter.sendMail(mainOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+      //req.flash('mess', 'Lỗi gửi mail: '+err); //Gửi thông báo đến người dùng
+      //res.redirect('/');
+    } else {
+      console.log('Message sent: ' + info.response);
+      //req.flash('mess', 'Một email đã được gửi đến tài khoản của bạn'); //Gửi thông báo đến người dùng
+      //res.redirect('/');
+    }
+  });
+
+  // /Send email ================================================
   res.redirect(req.headers.referer);
 })
 

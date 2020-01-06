@@ -73,11 +73,14 @@
                 <dd>
                     <select type="text" name="id_cat" class="form-control form-control-xs" style="width: 700px;">
                         {{!-- <option value="-1">All Categories</option> --}}
-                        <option value="3">Điện thoại</option>
+                        {{!-- <option value="3">Điện thoại</option>
                         <option value="4">Laptop</option>
                         <option value="7">Laptop</option>
                         <option value="5">Xe máy</option>
-                        <option value="6">Xe ô tô</option>
+                        <option value="6">Xe ô tô</option> --}}
+                        {{#each cat_lv2}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/each}}
                     </select>
                 </dd>
                 <dt>
@@ -119,23 +122,7 @@
                     <textarea class="form-control" id="description" name="description" style="width: 700px;"
                         placeholder="Nhập mô tả"></textarea>
                 </dd>
-                {{!-- <dt>
-                    <h5>Tự động gia hạn</h5>
-                </dt>
-                <dd>
-                    {{!-- <input class="form-check-input" type="checkbox" value="1" name="extend" id="extend">
-                    <label>
-                        Có
-                    </label> --}}
-                    <div class="form-check">
-                        <div>
-                            <input type="radio" name="extend" value="1" id="">Có
-                        </div>
-                        <div>
-                            <input type="radio" name="extend" value="0" id="">không
-                        </div>
-                    </div>
-                </dd> --}}
+                
             </dl>
             <button class="btn btn-success btn-block" type="submit">
                 Đăng bán

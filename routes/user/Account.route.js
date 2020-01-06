@@ -8,6 +8,7 @@ var modifyFilename = require('modify-filename');
 const userModel = require('../../models/user.model');
 const productModel = require('../../models/product.model');
 const ratingModel = require('../../models/rating.model');
+const categoryModel = require('../../models/category.model');
 const DataMasker = require("data-mask");
 
 const restrict = require('../../middlewares/auth.mdw');
@@ -234,8 +235,12 @@ router.post('/profile/:id/upgrade_suggest', async (req, res) => {
   res.redirect(req.headers.referer);
 })
 
-router.get('/sellproduct', async (req, res) => {
-  res.render('user/sellProduct');
+router.get('/sellproduct', restrict, async (req, res) => {
+  const rows = await categoryModel.cat_lv2();
+  console.log(rows);
+  res.render('user/sellProduct', {
+    cat_lv2 : rows,
+  });
 })
 
 router.post('/sellproduct', async (req, res) => {

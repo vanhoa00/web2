@@ -8,7 +8,7 @@ module.exports = {
   update_stt: proId => db.update_stt('products', {id_pro : proId}),
   del: proId => db.del('products', {id_pro : proId}),
   detail: id_pro => db.load(`select p.*,  u2.name winner, u2.id id_winner, u1.name seller from products p, users u1, users u2 where p.id_sel = u1.id and p.id_pro = ${id_pro} and p.id_winner = u2.id`),
-  relate: id_cat => db.load(`select * from products where id_cat = ${id_cat} and status_pro = 1 limit 4`),
+  relate: id_cat => db.load(`select * from products where id_cat = ${id_cat} and status_pro = 1 limit 5`),
   bidding: entity => db.add('bidding_history', entity),
   update_price: entity => {
     const inf = { current_price: entity.price, id_winner: entity.id};
