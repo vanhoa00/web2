@@ -1,12 +1,14 @@
 const restrict = require('../middlewares/auth.mdw');
+const restrict_admin = require('../middlewares/admin.mdw');
+
 
 module.exports = function (app) {
 
-	app.use('/admin/categories', require('../routes/admin/category.route'));
+	app.use('/admin/categories',restrict_admin, require('../routes/admin/category.route'));
 
-	app.use('/admin/products', require('../routes/admin/product.route'));
+	app.use('/admin/products', restrict_admin, require('../routes/admin/product.route'));
 
-	app.use('/admin/users', require('../routes/admin/user.route'));
+	app.use('/admin/users', restrict_admin, require('../routes/admin/user.route'));
 
 	app.use('/admin', require('../routes/admin/admin.route'));
 

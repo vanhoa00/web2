@@ -34,4 +34,6 @@ module.exports = {
   checkEmail: email => db.load(`select * from users where email = ${email}`),
   checkPhone: Phone => db.load(`select * from users where Phone = ${Phone}`),
   getHistory: id_pro => db.load(`SELECT * FROM users u, bidding_history b WHERE u.id = b.id and b.id_pro = ${id_pro}`),
+  getRating: username => db.load(`SELECT r.*, u.username person_rating FROM ratings r, users u WHERE r.id_person_rating = u.id and r.username = '${username}'`),
+  getAVGRating: username => db.load(`SELECT AVG(mark) avg FROM ratings WHERE username = '${username}'`),
 };

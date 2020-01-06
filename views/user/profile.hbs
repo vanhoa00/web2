@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/assets/css/user.css">
 {{/section}}
 <script>
-    document.title = "{{authUser.name}}";
+	document.title = "{{user.name}}";
 </script>
 <div class="container emp-profile">
 	<div class="row">
@@ -44,9 +44,10 @@
 				<div class="col-md-5">
 					<div class="profile-head">
 						<h5>
-							{{authUser.name}}
+							{{user.name}}
 						</h5>
-						<p class="proile-rating">RANKINGS : <span>8/10</span></p>
+						<p class="proile-rating">RANKINGS : <span>{{#if avg}} {{avg}}/10 {{else}} 0/10{{/if}}</span>
+						</p>
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#About" role="tab"
@@ -61,23 +62,26 @@
 				</div>
 				<div class="col-md-3">
 					<div class="edit_profile">
-						<button class="profile-edit-btn" onclick="window.location.href='/user/profile/{{authUser.id}}/changeprofile';">
+						<button class="profile-edit-btn"
+							onclick="window.location.href='/user/profile/{{user.id}}/changeprofile';">
 							Edit Profile
 						</button>
 					</div>
 					<div>
-						<button class="profile-edit-btn" onclick="window.location.href='/user/profile/{{authUser.id}}/changepassword';">
+						<button class="profile-edit-btn"
+							onclick="window.location.href='/user/profile/{{user.id}}/changepassword';">
 							Change password
 						</button>
 					</div>
-					{{#ifCond authUser.Permission 1}}
+					{{#ifCond user.Permission 0}}
 					<form method="POST">
-					<div class="mt-2">
-						<input type="hidden" name="id" value="{{authUser.id}}">
-						<button class="profile-edit-btn" type ="submit" formaction="/user/profile/{{authUser.id}}/upgrade_suggest">
-							Upgrade Seller
-						</button>
-					</div>
+						<div class="mt-2">
+							<input type="hidden" name="id" value="{{user.id}}">
+							<button class="profile-edit-btn" type="submit"
+								formaction="/user/profile/{{user.id}}/upgrade_suggest">
+								Upgrade Seller
+							</button>
+						</div>
 					</form>
 					{{/ifCond}}
 				</div>
@@ -91,7 +95,7 @@
 									<label>User Name</label>
 								</div>
 								<div class="col-md-6">
-									<p>{{authUser.username}}</p>
+									<p>{{user.username}}</p>
 								</div>
 							</div>
 							<div class="row">
@@ -99,7 +103,7 @@
 									<label>Name</label>
 								</div>
 								<div class="col-md-6">
-									<p>{{authUser.name}}</p>
+									<p>{{user.name}}</p>
 								</div>
 							</div>
 							<div class="row">
@@ -107,7 +111,7 @@
 									<label>Email</label>
 								</div>
 								<div class="col-md-6">
-									<p>{{authUser.email}}</p>
+									<p>{{user.email}}</p>
 								</div>
 							</div>
 							<div class="row">
@@ -115,7 +119,7 @@
 									<label>Phone</label>
 								</div>
 								<div class="col-md-6">
-									<p>{{authUser.Phone}}</p>
+									<p>{{user.Phone}}</p>
 								</div>
 							</div>
 							<div class="row">
@@ -123,7 +127,7 @@
 									<label>Permission</label>
 								</div>
 								<div class="col-md-6">
-									<p>{{#if authUser.Permission}}Seller
+									<p>{{#if user.Permission}}Seller
 										{{else}}Bidder
 										{{/if}}
 									</p>
@@ -158,9 +162,7 @@
 						</div>
 					</div>
 				</div>
-
 				{{/each}}
-
 				{{/if}}
 
 			</div>
@@ -181,10 +183,10 @@
 						<div class="card product" style="height: 400px">
 							<div class="product-img">
 								<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
-								onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+									onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
 								{{#if isWon}}
 								<div class="product-label">
-									<span class="new">#</span>
+									<span class="new">TOP</span>
 								</div>
 								{{/if}}
 							</div>
@@ -197,9 +199,7 @@
 							</div>
 						</div>
 					</div>
-
 					{{/each}}
-
 					{{/if}}
 
 				</div>
@@ -219,8 +219,15 @@
 					{{#each this.myProduct}}
 					<div class="col-sm-3">
 						<div class="card product" style="height: 400px">
-							<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
-							onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+							<div class="product-img">
+								<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
+									onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+								{{#ifCond status_pro 0}}
+								<div class="product-label">
+									<span class="new">SOLD</span>
+								</div>
+								{{/ifCond}}
+							</div>
 							<div class="card-body tdspkhac" onclick="window.location.href = '/product/{{id_pro}}';">
 								<a href="/product/{{id_pro}}">{{name_pro}}</a>
 							</div>
@@ -240,7 +247,8 @@
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="wonlist">
 			<table class="table table-hover mt-2">
-				{{#if this.myWonlist_empty}}
+				<div class="row">
+					{{#if this.myWonlist_empty}}
 					<div class="card-body">
 						<p class="card-text">
 							Không có dữ liệu.
@@ -252,7 +260,7 @@
 						<div class="card product" style="height: 400px">
 							<div class="product-img">
 								<img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
-								onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
+									onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
 							</div>
 							<div class="card-body tdspkhac" onclick="window.location.href = '/product/{{id_pro}}';">
 								<a href="/product/{{id_pro}}">{{name_pro}}</a>
@@ -263,29 +271,38 @@
 							</div>
 						</div>
 					</div>
-
 					{{/each}}
-
 					{{/if}}
+				</div>
+
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="rate">
-			<table class="table table-hover mt-2">
-				<thead>
-					<tr>
-						<th>Tên sản phẩm</th>
-						<th>UserName</th>
-						<th>Rate</th>
-					</tr>
-				</thead>
+			<table class="table table-bordered">
+				{{#if rating}}
+
 				<tbody>
 					<tr>
-						<td>Acer Nito 5</td>
-						<td>Doe</td>
-						<td><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-								class="fa fa-star"></i><i class="fa fa-star"></i></td>
+						<td width="20%">UserName</td>
+						<td width="10%">Mark</td>
+						<td>Comment</td>
 					</tr>
+					{{#each this.rating}}
+					<tr>
+						<td width="20%">{{person_rating}}</td>
+						<td width="10%">{{mark}}</td>
+						<td>{{comment}}</td>
+					</tr>
+					{{/each}}
+					{{else}}
+					<div class="card-body">
+						<p class="card-text">
+							Không có dữ liệu.
+						</p>
+					</div>
 				</tbody>
+				{{/if}}
+
 			</table>
 		</div>
 

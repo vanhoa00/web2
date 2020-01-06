@@ -1,0 +1,28 @@
+/* COUNT DOWN: https://codepen.io/SitePoint/pen/MwNPVq */
+  #clockdiv{
+    font-family: sans-serif;
+    color: black;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+  }
+  
+  #clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  
+  #clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: rgb(135, 214, 200);
+    display: inline-block;
+  }
+  
+  .smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+  }
+  /* END COUNT DOWN*/

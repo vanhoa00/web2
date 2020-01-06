@@ -36,7 +36,33 @@
         </div>
         <div class="card-footer bg-transparent border-0 add-to-cart">
           <h6 class="product-price">{{format current_price}}</h6>
+          {{#if ../isAuthenticated}}
+          {{#if watchlist}}
+          <form method="POST" action="/user/watchlist" id="frmWatchList_{{id_pro}}">
+            <div class="row">
+              <input type="hidden" name="id" value="{{../authUser.id}}">
+              <input type="hidden" name="id_pro" value="{{id_pro}}">
+            </div>
+          </form>
+          <button class="watch-list-btn btn-block mr-4" type="submit"
+            onclick="javascript: $('#frmWatchList_{{id_pro}}').submit();">
+            Add
+          </button>
+          {{else}}
+          <form method="POST" action="/user/removewatchlist" id="frmWatchList_{{id_pro}}">
+            <div class="row">
+              <input type="hidden" name="id" value="{{../authUser.id}}">
+              <input type="hidden" name="id_pro" value="{{id_pro}}">
+            </div>
+          </form>
+          <button class="watch-list-btn btn-block mr-4" type="submit"
+            onclick="javascript: $('#frmWatchList_{{id_pro}}').submit();">
+            Remove
+          </button>
+          {{/if}}
+          {{else}}
           <button class="add-to-cart-btn"><i class="fa fa-eye"></i> View more</button>
+          {{/if}}
         </div>
       </div>
     </div>
@@ -58,7 +84,7 @@
           </li>
           {{else}}
           <li class="page-item">
-            <a class="page-link" href="?id_cat={{_id}}&key={{_key}}&page={{value}}">{{value}}</a>
+            <a class="page-link" href="?id_cat={{../id}}&key={{../key}}&page={{value}}">{{value}}</a>
           </li>
           {{/if}}
           {{/each}}

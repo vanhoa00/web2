@@ -7,7 +7,7 @@ module.exports = {
   add: entity => db.add('products', entity),
   update_stt: proId => db.update_stt('products', {id_pro : proId}),
   del: proId => db.del('products', {id_pro : proId}),
-  detail: id_pro => db.load(`select *, u2.name winner, u1.name seller from products p, users u1, users u2 where p.id_sel = u1.id and p.id_pro = ${id_pro} and p.status_pro = 1 and p.id_winner = u2.id`),
+  detail: id_pro => db.load(`select p.*,  u2.name winner, u2.id id_winner, u1.name seller from products p, users u1, users u2 where p.id_sel = u1.id and p.id_pro = ${id_pro} and p.id_winner = u2.id`),
   relate: id_cat => db.load(`select * from products where id_cat = ${id_cat} and status_pro = 1 limit 4`),
   bidding: entity => db.add('bidding_history', entity),
   update_price: entity => {
@@ -48,4 +48,18 @@ module.exports = {
   top5product: () => db.load(`SELECT p.*, count(bh.id_pro) as qty FROM bidding_history bh JOIN products p on bh.id_pro= p.id_pro where p.status_pro = 1 GROUP BY bh.id_pro ORDER BY qty DESC LIMIT 5`),
   top5price: () => db.load(`SELECT * FROM products WHERE status_pro = 1 ORDER BY current_price DESC LIMIT 5`),
   top5date: () => db.load(`SELECT * FROM products WHERE status_pro = 1 ORDER BY time_end ASC LIMIT 5`),
+
+  // update description
+  update_des: entity => {
+    const condition = { id_pro: entity.id_pro };
+    delete entity.id_pro;
+    entity.description = entity.description + entity.description_new;
+    delete entity.description_new;
+    return db.patch('products', entity, condition);
+  },
+  buynow: entity => {
+    const condition = { id_pro: entity.id_pro };
+    delete entity.id_pro;
+    return db.patch('products', entity, condition);
+  },
 };

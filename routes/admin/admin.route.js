@@ -10,12 +10,13 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   res.render('backend/vwAdmin/Login');
+  //res.render('backend/vwProducts/index');
 })
 
 router.post('/', async (req, res) => { 
   const admin = await adminModel.singleByAdminname(req.body.username);
   if (admin === null){
-    return res.render('backend/vwAdmin/Login', {
+    return res.render('backend/vwProducts/index', {
       err_message: 'Invalid adminname or password.'
     });
   }
@@ -40,7 +41,7 @@ router.post('/', async (req, res) => {
 router.post('/logout', (req, res) => {
   req.session.isAdmin = false;
   req.session.authAdmin = null;
-  res.redirect('backend/admin/login');
+  res.redirect('/admin');
 });
 
 

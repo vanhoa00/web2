@@ -7,6 +7,10 @@ const validator = require("email-validator");
 var modifyFilename = require('modify-filename');
 const userModel = require('../../models/user.model');
 const productModel = require('../../models/product.model');
+const ratingModel = require('../../models/rating.model');
+const DataMasker = require("data-mask");
+
+const restrict = require('../../middlewares/auth.mdw');
 
 // dùng để sử dụng captcha
 //const bodyParser = require('body-parser');
@@ -106,23 +110,30 @@ router.post('/register', async (req, res) => {
   res.render('user/Register');
 });
 
-router.get('/profile/:id', async (req, res) => {
+router.get('/profile/:id', restrict, async (req, res) => {
+  const user = await userModel.single(req.params.id);
+  const avg = await userModel.getAVGRating(user[0].username);
+  const rating = await userModel.getRating(user[0].username);
   const watchlist = await userModel.getWatchList(req.params.id);
   const myProduct = await productModel.getMyProduct(req.params.id);
   const myAuction = await productModel.getMyAuction(req.params.id);
   const myWonlist = await productModel.getMyWonlist(req.params.id);
-  console.log(myAuction);
   for (var i = myAuction.length - 1; i >= 0; i--) {
     if(myAuction[i].id_winner == req.params.id){
       myAuction[i].isWon = true;
     }
   }
-  console.log(myAuction);
+  for (var i = rating.length - 1; i >= 0; i--) {
+    rating[i].person_rating = DataMasker.maskLeft(rating[i].person_rating, 5, '*');
+  }
   res.render('user/profile', {
+    user: user[0],
+    avg: avg[0].avg,
     watchlist: watchlist,
     myProduct: myProduct,
     myAuction: myAuction,
     myWonlist: myWonlist,
+    rating: rating,
     watchlist_empty: watchlist.length === 0,
     myProduct_empty: myProduct.length === 0,
     myAuction_empty: myAuction.length === 0,
@@ -140,10 +151,15 @@ router.get('/profile/:id/changeprofile', async (req, res) => {
 
 router.post('/profile/:id/changeprofile', async (req, res) => {
   const entity = req.body;
+  if(entity.name == "" || entity.Email == "" || entity.Phone == ""){
+    const user = await userModel.single(req.params.id);
+    return res.render('user/changeProfile', {
+      user: user[0],
+      empty: user.length === 0,
+    });
+  }
   const username = req.body.username;
   delete entity.username;
-  console.log(entity);
-  console.log(username);
   entity.DateOfBirth = moment(req.body.DateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD');
   
   const result = await userModel.updateProfile(entity, username);
@@ -169,7 +185,6 @@ router.post('/profile/:id/changepassword', async (req, res) => {
     });
   }
 
-
   if(req.body.raw_password != req.body.repass){
     return res.render('user/changePassword', {
       err_message: 'Invalid Password'
@@ -188,9 +203,34 @@ router.post('/profile/:id/changepassword', async (req, res) => {
   return res.render('user/changePassword');
 })
 
+// rating
+router.get('/profile/:id/rating', restrict, async (req, res) => {
+  const user = await userModel.single(req.params.id);
+  const rating = await userModel.getRating(user[0].username);
+  const avg = await userModel.getAVGRating(user[0].username);
+
+  for (var i = rating.length - 1; i >= 0; i--) {
+    rating[i].person_rating = DataMasker.maskLeft(rating[i].person_rating, 5, '*');
+  }
+
+  res.render('user/rating', {
+    user: user[0],
+    avg: avg[0].avg,
+    empty: user.length === 0,
+    rating: rating,
+  });
+})
+router.post('/profile/:id/rating', async (req, res) => {
+  const entity = req.body;
+  delete entity.name;
+  const result = await ratingModel.add(entity);
+  // res.render('user/profile');
+  res.redirect(req.headers.referer);
+
+})
+
 router.post('/profile/:id/upgrade_suggest', async (req, res) => {
   const result = await userModel.upgrade_suggest(req.body.id);
-  console.log(req.body.id);
   res.redirect(req.headers.referer);
 })
 
@@ -199,12 +239,26 @@ router.get('/sellproduct', async (req, res) => {
 })
 
 router.post('/sellproduct', async (req, res) => {
+  console.log(req.body);
+
+
   const getID = await productModel.getID();
   var files;
   temp = 1;
 
   ID = getID[0].id + 1;
   upload.array('fuMain', 3)(req, res, err => {
+    if(req.body.name_pro == "" || req.body.current_price == "" || req.body.step == "" || req.body.buynow_price == "" || req.body.description == ""){
+      return res.render('user/sellProduct', {
+        err_message: 'Invalid data'
+      });
+    }
+  
+    if(req.body.current_price > req.body.buynow_price){
+      return res.render('user/sellProduct', {
+        err_message: 'Giá mua ngay cao hơn giá hiện tại'
+      });
+    }
     files = req.files;
     if(files.length != 3)
     {
@@ -215,7 +269,6 @@ router.post('/sellproduct', async (req, res) => {
     else {
       const insert = req.body;
   
-      delete insert.buocGia;
       insert.id_sel = res.locals.authUser.id;
 
       const now = moment().startOf('second');

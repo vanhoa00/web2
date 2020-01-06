@@ -1,0 +1,108 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/util.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script>
+	document.title = "Đánh giá";
+</script>
+{{/section}}
+
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100 p-l-55 p-r-55 p-t-30 p-b-30">
+			<form class="login100-form validate-form" method="POST">
+				<span class="login100-form-title p-b-10">
+					Đánh giá {{#if avg}} {{avg}}/10 {{else}} 0/10 {{/if}}
+				</span>
+				{{#if err_message}}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{{err_message}}
+				</div>
+				{{/if}}
+				<div class="row">
+					<div class="row">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<input type="hidden" class="form-control" name="username" id="username"
+									style="width: 420px;" value={{user.username}}>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<label style="float: left">Tên</label>
+								<input type="text" class="form-control" name="name" id="name" style="width: 420px;"
+									value="{{user.name}}" readonly>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<input type="hidden" class="form-control" name="id_person_rating" id="id_person_rating"
+									style="width: 420px;" value={{authUser.id}}>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<label style="float: left">Điểm đánh giá (từ 1-10)</label>
+								<input type="number" class="form-control" name="mark" id="mark" style="width: 420px;"
+									value="">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<label style="float: left">Bình luận</label>
+								<textarea class="form-control" name="comment" id="comment" rows="3"
+									cols="50"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<button id="Success" type="submit" class="btn btn-primary btn-sm">Gửi</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<div>
+		{{#if rating}}
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td width="20%">UserName</td>
+					<td width="10%">Mark</td>
+					<td>Comment</td>
+				</tr>
+				{{#each this.rating}}
+				<tr>
+					<td width="20%">{{person_rating}}</td>
+					<td width="10%">{{mark}}</td>
+					<td>{{comment}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		{{else}}
+		<div class="card-body">
+			<p class="card-text">
+				Không có dữ liệu.
+			</p>
+		</div>
+		{{/if}}
+	</div>
+</div>
+</div>
