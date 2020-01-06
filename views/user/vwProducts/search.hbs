@@ -21,7 +21,7 @@
   <div class="row">
     {{#each this.products}}
     <div class="col-sm-3">
-      <div class="card product" style="height: 400px">
+      <div class="card product" style="height: 420px">
         <div class="product-img">
           <img class="card-header bg-transparent" src="/images/product/{{id_pro}}_1.jpg"
             onclick="window.location.href = '/product/{{id_pro}}';" style="height: 170px">
@@ -35,6 +35,8 @@
           <a href="/product/{{id_pro}}">{{name_pro}}</a>
         </div>
         <div class="card-footer bg-transparent border-0 add-to-cart">
+          <h6>Số lượt ra giá: {{count_bidding}}</h6>
+          <h6>Top1: {{top1}}</h6>
           <h6 class="product-price">{{format current_price}}</h6>
           {{#if ../isAuthenticated}}
           {{#if watchlist}}

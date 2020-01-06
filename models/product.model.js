@@ -3,8 +3,10 @@ const config = require('../config/default.json');
 
 module.exports = {
   all: () => db.load('select * from products where status_pro = 1'),
+  admin_single: id => db.load(`select * from products where id_pro = ${id}`),
   single: id => db.load(`select * from products where id_pro = ${id} and status_pro = 1`),
   add: entity => db.add('products', entity),
+  admin_product: () => db.load(`SELECT p.*, cat.name name_cat FROM products p JOIN categories cat on p.id_cat=cat.id`),
   update_stt: proId => db.update_stt('products', {id_pro : proId}),
   del: proId => db.del('products', {id_pro : proId}),
   detail: id_pro => db.load(`select p.*,  u2.name winner, u2.id id_winner, u1.name seller from products p, users u1, users u2 where p.id_sel = u1.id and p.id_pro = ${id_pro} and p.id_winner = u2.id`),
@@ -30,6 +32,8 @@ module.exports = {
   getMyProduct: id => db.load(`select * from products where id_sel = ${id}`),
   getMyAuction: id => db.load(`SELECT * FROM bidding_history bh, products p WHERE bh.id = ${id} and bh.id_pro = p.id_pro GROUP by id, bh.id_pro`),
   getMyWonlist: id => db.load(`SELECT * FROM products WHERE id_winner = ${id} and status_pro = 0`),
+  getCountBidding: id_pro => db.load(`SELECT COUNT(*) count_bidding FROM bidding_history WHERE id_pro = ${id_pro} GROUP BY id_pro`),
+  getTop1: id_pro => db.load(`SELECT u.name top1 FROM products p, users u WHERE p.id_winner = u.id and p.id_pro = ${id_pro}`),
     
 
   allByCat: id_cat => db.load(`select * from products where id_cat = ${id_cat} and status_pro = 1`),

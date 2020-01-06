@@ -9,7 +9,15 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-  res.render('backend/vwAdmin/Login');
+  if(res.locals.isAdmin){
+    const rows = await productModel.admin_product();
+    return res.render('backend/vwProducts/index', {
+    products: rows,
+    empty: rows.length === 0
+  });
+  }
+  else
+    return res.render('backend/vwAdmin/Login');
   //res.render('backend/vwProducts/index');
 })
 

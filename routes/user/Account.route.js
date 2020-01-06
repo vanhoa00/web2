@@ -244,9 +244,6 @@ router.get('/sellproduct', restrict, async (req, res) => {
 })
 
 router.post('/sellproduct', async (req, res) => {
-  console.log(req.body);
-
-
   const getID = await productModel.getID();
   var files;
   temp = 1;
@@ -284,8 +281,7 @@ router.post('/sellproduct', async (req, res) => {
       insert.id_winner = req.body.id_sel;
 
       const result = productModel.add(insert);
-
-      res.render('user/sellProduct');
+      res.redirect('http://localhost:3000/');
     }
   });
 })

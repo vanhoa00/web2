@@ -23,7 +23,6 @@
         <th scope="col">Hình ảnh</th>
         <th scope="col">Tên sản phẩm</th>
         <th scope="col">Giá</th>
-        <th scope="col">Số lượng</th>
         <th scope="col">Danh mục</th>
         <th scope="col">Trạng thái</th>
         <th scope="col">Tác vụ</th>
@@ -33,17 +32,16 @@
       {{#each this.products}}
       <tr>
         <th scope="row" class="text-center">{{id_pro}}</th>
-        <td ><img src="{{image}}" height="80px" width="80px"></td>
+        <td ><img src="/images/product/{{id_pro}}_1.jpg" height="80px" width="80px"></td>
         <td class="text-left">{{name_pro}}</td>
         
-        <td >{{bidPrice}}</td>
-        <td >{{qty}}</td>
-        <td >abc</td>
+        <td >{{current_price}}</td>
+        <td >{{name_cat}}</td>
         <td >
           {{#ifCond status_pro 1}}
             <span class="badge badge-pill badge-success">Đang bán</span>
           {{else}}
-            <span class="badge badge-pill badge-dark">Ẩn</span>
+            <span class="badge badge-pill badge-dark">Đã bán</span>
           {{/ifCond}}
         </td>
         <td class="text-right">

@@ -13,6 +13,12 @@ router.get('/', async (req, res) => {
   const top5price = await productModel.top5price();
   const top5date = await productModel.top5date();
   for (var i = top5product.length - 1; i >= 0; i--) {
+    const count_bidding = await productModel.getCountBidding(top5product[i].id_pro);
+    top5product[i].count_bidding = count_bidding[0].count_bidding;
+
+    const top1 = await productModel.getTop1(top5product[i].id_pro);
+    top5product[i].top1 = top1[0].top1;
+
     const now = moment().startOf('second');
     if (moment(now).isBefore(moment(top5product[i].time_start).add(48, 'hours'), 'hours')) {
       top5product[i].isnew = true;
@@ -29,6 +35,14 @@ router.get('/', async (req, res) => {
   }
 
   for (var i = top5price.length - 1; i >= 0; i--) {
+    const count_bidding = await productModel.getCountBidding(top5price[i].id_pro);
+    if(count_bidding.length == 0){
+      top5price[i].count_bidding = 0;
+    }
+    else top5price[i].count_bidding = count_bidding[0].count_bidding;
+    
+    const top1 = await productModel.getTop1(top5price[i].id_pro);
+    top5price[i].top1 = top1[0].top1;
     const now = moment().startOf('second');
     if (moment(now).isBefore(moment(top5price[i].time_start).add(48, 'hours'), 'hours')) {
       top5price[i].isnew = true;
@@ -45,6 +59,13 @@ router.get('/', async (req, res) => {
   }
 
   for (var i = top5date.length - 1; i >= 0; i--) {
+    const count_bidding = await productModel.getCountBidding(top5date[i].id_pro);
+    if(count_bidding.length == 0){
+      top5date[i].count_bidding = 0;
+    }
+    else top5date[i].count_bidding = count_bidding[0].count_bidding;
+    const top1 = await productModel.getTop1(top5date[i].id_pro);
+    top5date[i].top1 = top1[0].top1;
     const now = moment().startOf('second');
     if (moment(now).isBefore(moment(top5date[i].time_start).add(48, 'hours'), 'hours')) {
       top5date[i].isnew = true;

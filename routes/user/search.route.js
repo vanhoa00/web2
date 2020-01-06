@@ -25,13 +25,20 @@ router.get('/', async (req, res) => {
   //
   // id_cat = req.query.id_cat;
   // key = req.query.key;
-  if (res.locals.isAuthenticated) {
-    for (var i = rows.length - 1; i >= 0; i--) {
+  for (var i = rows.length - 1; i >= 0; i--) {
+    if (res.locals.isAuthenticated) {
       const checkWatchList = await userModel.checkWatchList(res.locals.authUser.id, rows[i].id_pro);
       if (checkWatchList.length === 0) {
         rows[i].watchlist = '1';
       }
     }
+    const count_bidding = await productModel.getCountBidding(rows[i].id_pro);
+    if (count_bidding.length == 0) {
+      rows[i].count_bidding = 0;
+    }
+    else rows[i].count_bidding = count_bidding[0].count_bidding;
+    const top1 = await productModel.getTop1(rows[i].id_pro);
+    rows[i].top1 = top1[0].top1;
   }
   for (var i = rows.length - 1; i >= 0; i--) {
     const now = moment().startOf('second');
@@ -104,6 +111,15 @@ router.get('/sort', async (req, res) => {
       productModel.totalSeach(id_cat, key), // Số lượng sản phẩm
       productModel.pageBySearch(id_cat, key, offset) // Số lượng sản phẩm mỗi trang
     ]);
+  }
+  for (var i = rows.length - 1; i >= 0; i--) {
+    const count_bidding = await productModel.getCountBidding(rows[i].id_pro);
+    if (count_bidding.length == 0) {
+      rows[i].count_bidding = 0;
+    }
+    else rows[i].count_bidding = count_bidding[0].count_bidding;
+    const top1 = await productModel.getTop1(rows[i].id_pro);
+    rows[i].top1 = top1[0].top1;
   }
   let nPages = Math.floor(total[0].total / limit);
   if (total[0].total % limit > 0) nPages++;

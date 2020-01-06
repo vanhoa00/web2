@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-  const rows = await productModel.all();
+  const rows = await productModel.admin_product();
   res.render('backend/vwProducts/index', {
     products: rows,
     empty: rows.length === 0
@@ -16,7 +16,7 @@ router.get('/err', (req, res) => {
   throw new Error('error occured');
 })
 router.get('/view/:id', async (req, res) => {
-  const rows = await productModel.single(req.params.id);
+  const rows = await productModel.admin_single(req.params.id);
   if (rows.length === 0) {
     throw new Error('Invalid product id');
   }
