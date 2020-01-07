@@ -5,7 +5,16 @@ const config = require('../../config/default.json');
 const moment = require('moment');
 const nodemailer = require('nodemailer');
 const DataMasker = require("data-mask");
+var cron = require('node-cron');
 
+cron.schedule('* 01 08 * * *', async () => {
+  try {
+    
+  }
+  catch(err) {
+    console.log(err);
+}
+});
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -18,6 +27,8 @@ router.get('/', async (req, res) => {
 
     const top1 = await productModel.getTop1(top5product[i].id_pro);
     top5product[i].top1 = top1[0].top1;
+    top5product[i].top1 = DataMasker.maskLeft(top5product[i].top1, 5, '*');
+
 
     const now = moment().startOf('second');
     if (moment(now).isBefore(moment(top5product[i].time_start).add(48, 'hours'), 'hours')) {
@@ -43,6 +54,8 @@ router.get('/', async (req, res) => {
     
     const top1 = await productModel.getTop1(top5price[i].id_pro);
     top5price[i].top1 = top1[0].top1;
+    top5price[i].top1 = DataMasker.maskLeft(top5price[i].top1, 5, '*');
+
     const now = moment().startOf('second');
     if (moment(now).isBefore(moment(top5price[i].time_start).add(48, 'hours'), 'hours')) {
       top5price[i].isnew = true;
@@ -66,6 +79,8 @@ router.get('/', async (req, res) => {
     else top5date[i].count_bidding = count_bidding[0].count_bidding;
     const top1 = await productModel.getTop1(top5date[i].id_pro);
     top5date[i].top1 = top1[0].top1;
+    top5date[i].top1 = DataMasker.maskLeft(top5date[i].top1, 5, '*');
+    
     const now = moment().startOf('second');
     if (moment(now).isBefore(moment(top5date[i].time_start).add(48, 'hours'), 'hours')) {
       top5date[i].isnew = true;
@@ -312,4 +327,37 @@ router.post('/update_des', async (req, res) => {
   });
 })
 
+// auto bidding
+router.post('/product/:id/autobid', async (req, res) => {
+  const rows = await productModel.detail(req.body.id_pro);
+  const max_bid_price = await productModel.max_bid_price(req.body.id_winner, req.body.id_pro); // giá cao nhất của sẩn phẩm được autobid mà không phải người autobid
+  const max_auto_bid = await productModel.max_auto_bid(req.body.id_winner, req.body.id_pro); // giá của người dùng autobid đặt cao nhấy
+  rows[0].price_suggest = rows[0].current_price + rows[0].step;
+  const id_user = req.body.id_winner;
+  // Nếu người autobid chưa từng bidding, hoặc sản phẩm chưa được bidding, thì giá bằng giá đề nghị
+  if(max_auto_bid[0].max_auto_bid == null || max_bid_price[0].max_bid_price == null || max_bid_price[0].max_bid_price > max_auto_bid[0].max_auto_bid)
+  {
+    max_auto_bid[0].max_auto_bid = 0;
+    max_bid_price[0].max_bid_price = 0;
+
+    // đấu giá tự động
+    // giá tự động sẽ bằng giá đề nghị (giây-phút-giờ-ngày-tháng-tuần)
+    cron.schedule('10 * * * * *', async () => {
+    try {
+    const entity = req.body;
+    delete entity.status_pro;
+    entity.price = rows[0].price_suggest;
+    entity.id = id_user;
+    delete entity.id_winner;
+    const temp1 = await productModel.bidding(entity);
+    const temp2 = await productModel.update_price(entity);
+      console.log('auto bidding complete');
+    }
+    catch(err) {
+      console.log(err);
+    }
+    });
+  }
+  res.redirect(req.headers.referer);
+})
 module.exports = router;

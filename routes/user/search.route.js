@@ -3,6 +3,8 @@ const productModel = require('../../models/product.model');
 const userModel = require('../../models/user.model');
 const config = require('../../config/default.json');
 const moment = require('moment');
+const DataMasker = require("data-mask");
+
 const router = express.Router();
 
 let id_cat, key, temp;
@@ -39,6 +41,8 @@ router.get('/', async (req, res) => {
     else rows[i].count_bidding = count_bidding[0].count_bidding;
     const top1 = await productModel.getTop1(rows[i].id_pro);
     rows[i].top1 = top1[0].top1;
+    rows[i].top1 = DataMasker.maskLeft(rows[i].top1, 5, '*');
+
   }
   for (var i = rows.length - 1; i >= 0; i--) {
     const now = moment().startOf('second');
@@ -120,6 +124,8 @@ router.get('/sort', async (req, res) => {
     else rows[i].count_bidding = count_bidding[0].count_bidding;
     const top1 = await productModel.getTop1(rows[i].id_pro);
     rows[i].top1 = top1[0].top1;
+    rows[i].top1 = DataMasker.maskLeft(rows[i].top1, 5, '*');
+
   }
   let nPages = Math.floor(total[0].total / limit);
   if (total[0].total % limit > 0) nPages++;

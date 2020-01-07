@@ -3,6 +3,8 @@ const productModel = require('../../models/product.model');
 const categoryModel = require('../../models/category.model');
 const userModel = require('../../models/user.model');
 const config = require('../../config/default.json');
+const DataMasker = require("data-mask");
+
 const router = express.Router();
 
 
@@ -34,6 +36,8 @@ router.get('/:id', async (req, res) => {
     else rows[i].count_bidding = count_bidding[0].count_bidding;
     const top1 = await productModel.getTop1(rows[i].id_pro);
     rows[i].top1 = top1[0].top1;
+    rows[i].top1 = DataMasker.maskLeft(rows[i].top1, 5, '*');
+
   }
 
   // const total = await productModel.countByCat(catId);

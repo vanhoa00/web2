@@ -33,7 +33,7 @@ module.exports = {
   getMyAuction: id => db.load(`SELECT * FROM bidding_history bh, products p WHERE bh.id = ${id} and bh.id_pro = p.id_pro GROUP by id, bh.id_pro`),
   getMyWonlist: id => db.load(`SELECT * FROM products WHERE id_winner = ${id} and status_pro = 0`),
   getCountBidding: id_pro => db.load(`SELECT COUNT(*) count_bidding FROM bidding_history WHERE id_pro = ${id_pro} GROUP BY id_pro`),
-  getTop1: id_pro => db.load(`SELECT u.name top1 FROM products p, users u WHERE p.id_winner = u.id and p.id_pro = ${id_pro}`),
+  getTop1: id_pro => db.load(`SELECT u.username top1 FROM products p, users u WHERE p.id_winner = u.id and p.id_pro = ${id_pro}`),
     
 
   allByCat: id_cat => db.load(`select * from products where id_cat = ${id_cat} and status_pro = 1`),
@@ -66,4 +66,8 @@ module.exports = {
     delete entity.id_pro;
     return db.patch('products', entity, condition);
   },
+
+  // auto bidding
+  max_bid_price: (id, id_pro)=> db.load(`SELECT MAX(price) max_bid_price FROM bidding_history WHERE id_pro = ${id} and id_pro = ${id_pro}`),
+  max_auto_bid: (id, id_pro) => db.load(`SELECT MAX(price) max_auto_bid FROM bidding_history WHERE id = ${id} and id_pro = ${id_pro}`),
 };
